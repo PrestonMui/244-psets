@@ -21,6 +21,8 @@ git config --global user.email "mui@berkeley.edu"
 
 Where you replace my name and email with yours. I think you are supposed to use the same email that you used for Github.
 
+(Oh! and you'll need a GitHub account, too).
+
 ## Cloning the repository
 
 The git model is to have a central **repository** stored on github. Each of us will have our own **local** copies of the repository. To get hooked up with the central repository, you will need to **clone** it. Open the command line and navigate to your folder and type
