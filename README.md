@@ -60,3 +60,48 @@ This "plays" the new changes on top of your files. It basically does whatever ch
 
 ## Make changes and pushing them to the local repository
 
+Say you want to add or modify a file. You simply make the changes on your computer, record the commits, and send the commits to Github. So, say you get started on the first problem set: You create the file ```pset1.tex``` and save it on your computer. If you go to the command line and type ```git status``` you should receive something like the following
+
+```
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	new file:   pset1.tex
+```
+
+So git seems to know that you've changed something. To **commit** your changes, you need to select what files you want to change. So, type
+
+```
+git add pset1.tex
+git status
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   pset1.tex
+
+```
+
+Once you are satisfied, you can finalize the commit:
+
+```
+git commit -m "Added pset1.tex"
+```
+
+The ```-m``` means "message." Every commit must have a message associated with it. The message should be short but descriptive. Finally, you can push your changes to the repository:
+
+```
+git push origin master
+```
+
+which will prompt you for your github login. You're done! To reiterate, the process was:
+
+1. Make changes in your local repository
+2. Decide what files you want to commit with ```git add```
+3. Record the commit with a message using ```git commit```
+4. Push the changes to the repository using ```git push```
+
+Some things to note are
+- If you do not add a file, it does not get committed. If it's not committed, it doesn't get pushed.
+- Commits should be small, if possible. So, do not add all of question one and make some changes in question two as well. The reason is that git records changes line by line, and git cannot split up commits. So, if I want to apply your commit to my files, I apply all of the commit or none of it. So, if the commits are small this minimizes chances of accidental overlaps.
+- You don't have to track every file. In fact, it makes sense for the only files we track to be .tex files and .do files (for obvious reasons) and .pdf files (so we can view them on github). Other files such as .latexmk or .aux files are unnecessary -- as long as we have the .tex file we can run the .tex file.
