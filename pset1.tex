@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage{minibox}
+\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\usepackage[parfill]{parskip}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%-----------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+\framebox[\linewidth]{ 
+	\minibox[c]{
+	\Large Homework \#1 \\ \\
+	Professor: Pat Kline \\ \\
+	Students: Christina Brown, Sam Leone, Peter McCrory, Preston Mui
+	}
+}
+\end{center}
+
+\subsection*{Identification I (OLS)}
+
+\subsection*{Identification II (A Structural Labor Supply Model)}
+
+\subsection*{Identification III (Mixture of Normals)}
+
+\subsection*{Quantile Treatment Effects}
+
+\subsection*{Iterated Projections}
+Prove the law of iterated projections 
+$$E^*[Y_i|X_i] = E^*[E^*[Y_i|X_i,Z_i]|X_i]$$
+
+\begin{proof}\mbox{}\\
+	Define $W_i' = \begin{bmatrix}X_i' & Z_i'\end{bmatrix}$. Recall that the linear projection of $W_i$ onto $Y_i$ requires that, for $\beta = E[W_i W_i']^{-1}E[W_i Y_i]$, the following must hold:
+
+	$$E[W_i(Y_i - W_i'\beta)] = 0.$$
+
+	This further implies that $$E[X_i\underbrace{(Y_i - W_i'\beta)}_{\equiv u_i}] = 0$$
+
+	Thus,
+	\begin{align*}
+		E^*[Y_i|X_i] & = X_i'E[X_iX_i']E[X_iY_i] \\
+		& = X_i'E[X_iX_i']^{-1}E[X_i(W_i'\beta + u_i)] \\
+		& = X_i'E[X_iX_i']^{-1}E[X_i W_i'\beta] + X_i'E[X_iX_i']^{-1}E[X_i u_i] \\
+		& = X_i'E[X_iX_i']^{-1}E[X_i E^*[Y_i|X_i,Z_i]] \\
+		& = E^*[E^*[Y_i|X_i,Z_i]|X_i]
+	\end{align*}
+	The third equality follows from the linearity of the projection function. The second term in the third equality is equal to zero by the observation made above. The fourth follows from the definition $E^*[Y_i|X_i,Z_i] = W_i\beta$.
+	\end{proof}
+
+\subsection*{FWL Theorem}
+
+\subsection*{Weighted Average Derivative Properties}
+
+\end{document}
