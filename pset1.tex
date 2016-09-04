@@ -6,6 +6,8 @@
 \usepackage{enumerate}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{amssymb}
 %-----------------------------------------------------------------------------
 \begin{document}
 \begin{center}
@@ -45,10 +47,49 @@ $$E^*[Y_i|X_i] = E^*[E^*[Y_i|X_i,Z_i]|X_i]$$
 		& = X_i'E[X_iX_i']^{-1}E[X_i E^*[Y_i|X_i,Z_i]] \\
 		& = E^*[E^*[Y_i|X_i,Z_i]|X_i]
 	\end{align*}
-	The third equality follows from the linearity of the projection function. The second term in the third equality is equal to zero by the observation made above. The fourth follows from the definition $E^*[Y_i|X_i,Z_i] = W_i\beta$.
+	The third equality follows from the linearity of the expectation operator. The second term in the third equality is equal to zero by the observation made above. The fourth follows from the definition $E^*[Y_i|X_i,Z_i] = W_i\beta$.
 	\end{proof}
 
 \subsection*{FWL Theorem}
+Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. Let $\tilde Z_i = Z_i - E^*[Z_i|X_i]$ and $\tilde Y_i = Y_i - E^*[Y_i|X_i]$:
+
+\begin{enumerate}[label = (\alph*)]
+	\item Show that $\gamma = E\left[\tilde Z_i \tilde Z_i'\right]^{-1} E\left[\tilde Z_i \tilde Y_i\right]$
+	\begin{proof}\mbox{}\\
+		Observe that we can write $Y_i = X_i'\beta + Z_i'\gamma + \epsilon_i$ where $\epsilon_i$ is the conditional expectation error term from the projection of $X_i$ and $Z_i$ onto $Y_i$. Recall that by definition, $E[X_i \epsilon_i] = E[Z_i \epsilon_i] = 0$. Thus, we can write:
+		\begin{align*}
+			Y_i & = X_i'\beta + Z_i'\gamma + \epsilon_i \\
+			X_i Y_i & = X_i X_i'\beta + X_i Z_i'\gamma + X_i \epsilon_i \\
+			E[X_i Y_i] & = E[X_i X_i'\beta] + E[X_i Z_i'\gamma] + E[X_i \epsilon_i]\\
+			X_i'E[X_iX_i']^{-1}E[X_i Y_i] & = X_i'E[X_iX_i']^{-1}E[X_i X_i']\beta + X_i'E[X_iX_i']^{-1}E[X_i Z_i']\gamma \\
+			E^*[Y_i|X_i] & = X_i'\beta + E^*[Z_i|X_i]'\gamma
+		\end{align*}
+		The third line follows from the first order condition of minimization. The fourth line premultiplies everything by $X_i'E[X_iX_i']^{-1}$. The final line simply replaces the expressions with their definition.
+
+		Now, subtract the final line from the first line:
+		\begin{align*}
+			\underbrace{Y_i - E^*[Y_i|X_i]}_{\tilde Y_i} & = X_i'\beta - X_i'\beta + \underbrace{Z_i'\gamma - E^*[Z_i|X_i]'\gamma}_{\tilde Z_i'\gamma} + \epsilon_i \\
+			\tilde Z_i \tilde Y_i & = \tilde Z_i \tilde Z_i'\gamma + \tilde Z_i\epsilon_i\\
+			E[\tilde Z_i \tilde Y_i]& = E[\tilde Z_i \tilde Z_i']\gamma + E[\tilde Z_i\epsilon_i]
+		\end{align*}
+		Observe that $E[Z_i\epsilon_i] = 0 \Longrightarrow E[\epsilon|Z_i] = 0 \Longrightarrow E[g(Z_i)\epsilon_i] = 0 \Longrightarrow E[\tilde Z_i \epsilon_i] = 0$.\footnote{Suppose the first implication did not hold, so that $E[\epsilon|Z_i] = a$ for some $a \in \mathbb{R}$. Then $E[Z_i\epsilon_i] = E[Z_iE[\epsilon|Z_i]] = aE[Z_i]$. This final term is not equal to zero except for the special case when $E[Z_i] = 0$.} Thus, we have $$E[\tilde Z_i \tilde Y_i] = E[\tilde Z_i \tilde Z_i']\gamma,$$
+		which after rearranging becomes $\gamma = E[\tilde Z_i \tilde Z_i']^{-1}E[\tilde Z_i \tilde Y_i],$ the desired result.
+	\end{proof}
+	\item Show that $Y_i - E^*[Y_i|X_i, Z_i] = (Y_i - E^*[Y_i|X_i]) - (Z_i - E^*[Z_i|X_i]'\gamma)$
+	\begin{proof}\mbox{}\\
+		Observe
+		\begin{align*}
+			E^*[Y_i|X_i,Z_i] & = X_i'\beta + Z_i'\gamma \\
+			E^*[E^*[Y_i|X_i,Z_i]|X_i] & = X_i'\beta + E^*[Z_i|X_i]'\gamma \\
+			E^*[Y_i|X_i] & = X_i'\beta + E^*[Z_i|X_i]'\gamma
+		\end{align*}
+		Now, we have, after solving the above equation for $X_i'\beta$, the desired result:
+		\begin{align*}
+		Y_i - X_i'\beta - Z_i'\gamma & = Y_i - E^*[Y_i|X_i] + E^*[Z_i|X_i]'\gamma - Z_i'\gamma \\
+		& = (Y_i - E^*[Y_i|X_i]) - (Z_i - E^*[Z_i|X_i])'\gamma
+		\end{align*}
+	\end{proof}
+\end{enumerate}
 
 \subsection*{Weighted Average Derivative Properties}
 
