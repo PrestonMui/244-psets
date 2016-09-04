@@ -4,7 +4,7 @@
 
 If you are reading this, then you have a Github account. However, to work on your computer and interact with the repository, you'll need git on your own computer. You can download git at [this link](https://git-scm.com/downloads).
 
-Once you have installed git, you can access git via the **command line**. Christina, for mac, you will access this through the **terminal**. Sam, for Windows, you will access this via the git command line. There are GUI options, but I find them quite complicated. For the rest of this guide, when I mention **command line** I will mean the terminal for Christina and the git command line tool for Sam. 
+Once you have installed git, you can access git via the **command line**. Christina, for mac, you will access this through the **terminal**. Sam, for Windows, you will access this via the git command line. To open up git command line, navigate to your cloned folder (see below) in windows explorer, right click on white space, and click ```git bash here```. There are GUI options, but I find them quite complicated. For the rest of this guide, when I mention **command line** I will mean the terminal for Christina and the git command line tool for Sam. 
 
 To check that you have git correctly installed, open the command line and type
 
