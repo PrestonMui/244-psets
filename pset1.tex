@@ -22,6 +22,24 @@
 
 \subsection*{Identification I (OLS)}
 
+Prove that $\theta \equiv \{ \beta, F_X(\cdot), F_{u|X}(\cdot) \}$ is point identified in OLS:
+
+First, $F_X(\cdot)$ is point identified from the joint distribution of $F_{Y,X}$ from $F_X(x) = \int_{y} \frac{\partial^2 F_{Y,X}}{\partial x \partial y}(y,x) dy$. Then,
+\begin{align*}
+	X_i Y_i &= X_i X_i' \beta + X_i u_i \\
+	E[X_i Y_i] &= E[X_i X_i'] \beta + E[X_i u_i] \\
+	E[X_i Y_i] &= E[X_i X_i'] \beta &\mbox{(by A1)} \\
+	E[X_i X_i']^{-1} E[X_i Y_i] &= \beta &\mbox{(by A2)}
+\end{align*}
+And so $\beta$ is point identified. Finally, with $\beta$ identified and using $F_{Y,X}$, one can derive the distribution of $F_{u|X}(\cdot)$ by
+\begin{align*}
+	F_{u|X}(t) &= P(u_i < t | X_i) \\
+	&= P(Y_i - X_i'\beta < t | X_i) \\
+	&= P(Y_i < t + X_i'\beta | X_i) \\
+	&= \int_{y < t + X_i'\beta} dF_{Y|X}(y|x) dy
+\end{align*}
+where $F_{Y|X}$ is the conditional c.d.f. of $Y$ given $X$ implied by the j.d.f. of $Y$ and $X$.
+
 \subsection*{Identification II (A Structural Labor Supply Model)}
 
 \begin{enumerate}[a)]
