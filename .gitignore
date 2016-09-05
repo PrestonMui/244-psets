@@ -4,6 +4,8 @@
 *.bcf
 *.blg
 *.run.xml
+*.fdb_latexmk
+*.fls
 
 # Packages #
 ############
