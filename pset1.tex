@@ -24,6 +24,58 @@
 
 \subsection*{Identification II (A Structural Labor Supply Model)}
 
+\begin{enumerate}
+
+	\item Derive the payoffs to working 20 and 40 hours:
+	\begin{align*}
+		u_{20}(w_i;d_i,a) &= 20 w_i - \frac{d_i}{1+a} 20^{1+a} \\
+		u_{40}(w_i;d_i,a) &= 40 w_i - \frac{d_i}{1+a} 40^{1+a}
+	\end{align*}
+
+	\item Derive the probability of working 40 hours a week given wages:
+
+	Given wages, the worker will work 40 hours if $u_{40}(w_i;d_i,a) > u_{20}(w_i;d_i,a)$, which holds when
+	\begin{align*}
+		40 w_i - \frac{d_i}{1+a} 40^{1+a} &> 20 w_i - \frac{d_i}{1+a} 20^{1+a} \\
+		2 w_i - \frac{2d_i}{1+a} 40^{a} &> w_i - \frac{d_i}{1+a} 20^{a} \\
+		w_i (1+a) &> 2d_i 40^a- d_i 20^{a} \\
+		\implies d_i &< \frac{w_i (1+a)}{2 \cdot 40^a - 20^a} \\
+		\implies \log d_i &< \log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a)
+	\end{align*}
+	The probability of which is $\Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} \bigg)$, where $\Phi$ is the c.d.f. of the standard normal.
+
+	\item Derive an individual's contribution to the likelihood of the observed data: Given an observation $(h_i, w_i)$ under a given parameter $a$ and parameters on the distribution of $\log d_i$, the likelihood of the observed data is $\Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} \bigg)$ if $h_i = 40$ and $1 - \Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} \bigg)$ if $h_i = 20$.
+
+	\item These likelihoods are, naturally, used in the maximum likelihood estimator.
+
+	\item The parameters $(a, \mu, \sigma)$ are set-identified (any two will imply the third).
+
+	\item Derive an expression for the probability of working 20 and 40 hours a week when the choice set for hours is $\{ 10,20,40 \}$: The utility from working 20 and 40 hours is as above, and the utility of working 10 hours is
+	\begin{align*}
+		u_{10}(w_i;d_i,a) &= 10 w_i - \frac{d_i}{1+a} 10^{1+a}
+	\end{align*}
+	A worker works 40 hours when $u_{40} > u_{20}$ (as above) and $u_{40} > u_{10}$. The latter happens when
+	\begin{align*}
+		40 w_i - \frac{d_i}{1+a} 40^{1+a} &> 10 w_i - \frac{d_i}{1+a} 10^{1+a} \\
+		4 w_i - \frac{4d_i}{1+a} 40^{a} &> w_i - \frac{d_i}{1+a} 10^{a} \\
+		3 w_i (1+a) - 4d_i 40^{a} &> - d_i 10^{a} \\
+		\implies d_i &< \frac{3w_i(1+a)}{4 \cdot 40^a - 10^a}
+	\end{align*}
+	However, this condition is met when $u_{40} > u_{20}$, unless $a < 0$ which is outside of the parameter space. So, the probability that the worker chooses 40 hours the same as in the $\{20,40\}$ choice set.
+
+	Using a similar derivation to the above, the worker chooses 20 hours over 10 hours when $d_i < \frac{w_i (1+a)}{2 \cdot 20^a - 10^a}$. So, the probability that the worker chooses 20 hours is
+	\begin{align*}
+		\Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 20^a - 10^a) - \mu}{\sigma} \bigg)  \\ - \Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} \bigg)
+	\end{align*}
+	
+	\item With the addition of the option to work 10 hours, the parameters are still set-identified, in the sense that choosing one value would imply the others.
+	
+	
+	
+
+\end{enumerate}
+
+
 \subsection*{Identification III (Mixture of Normals)}
 
 \subsection*{Quantile Treatment Effects}
