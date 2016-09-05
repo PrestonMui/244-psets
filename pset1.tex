@@ -76,6 +76,21 @@
 
 \subsection*{Quantile Treatment Effects}
 
+\begin{enumerate}[a)]
+
+	\item Let $Z_i = g(Y_i)$, where $g(\cdot)$ is a monotonically increasing function. Prove that $Q_{\tau}(Z_i) = g(Q_{\tau}(Y_i))$:
+
+	\begin{align*}
+		F_Z(g(Q_{\tau}(Y_i))) &= Pr(Z_i < g(Q_{\tau}(Y_i))) \\
+		&= Pr(Y_i < Q_{\tau}(Y_i)) &\mbox{(Since $g(\cdot)$ is monotonically increasing)} \\
+		&= F_Y(Q_{\tau}(Y_i)) = \tau \\
+		\implies g(Q_{\tau}(Y_i)) &= F_Z^{-1}(\tau) = Q_{\tau}(Z_i) &\square
+	\end{align*}
+	
+
+\end{enumerate}
+
+
 \subsection*{Iterated Projections}
 Prove the law of iterated projections 
 $$E^*[Y_i|X_i] = E^*[E^*[Y_i|X_i,Z_i]|X_i]$$
