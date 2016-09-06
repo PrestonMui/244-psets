@@ -91,6 +91,14 @@ where $F_{Y|X}$ is the conditional c.d.f. of $Y$ given $X$ implied by the j.d.f.
 \end{enumerate}
 
 \subsection*{Identification III (Mixture of Normals)}
+We can write this problem as 
+$$Y_i = D_i X_i + (1-D_i)W_i \text{ with } D_i \times X_i \times W_i \sim Bernoulli(\rho) \times N(0,1) \times N(0,\sigma^2).$$ 
+
+The structure is thus pinned down by the parameters $\mu = (\sigma^2,\rho)$. A structure in this model space that is not identified--either globally or locally--is $\mu' = (1,\rho')$ for some $\rho \in \mathbb{R}$.
+
+By the law of total probability, $$F_{\mu'}(y) = \rho' \phi(y) + (1-\rho')\phi(y) = \phi(y) = \tilde \rho \phi(y) + (1-\tilde \rho)\phi(y) = F_{\tilde \mu}(y)$$ for some $\tilde \rho \in B_{\epsilon}(\rho')$, where $B_{\epsilon}(\rho')$ is an epsilon ball around the true parameter $\rho'$. 
+
+Thus, for any value of $\rho$, if the variance of $W_i$ is equal to $1$, we cannot identify the structure generating the observed data.
 
 \subsection*{Quantile Treatment Effects}
 
@@ -167,7 +175,7 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 			E^*[E^*[Y_i|X_i,Z_i]|X_i] & = X_i'\beta + E^*[Z_i|X_i]'\gamma \\
 			E^*[Y_i|X_i] & = X_i'\beta + E^*[Z_i|X_i]'\gamma
 		\end{align*}
-		Now, we have, after solving the above equation for $X_i'\beta$, the desired result:
+		Now, we have, after solving the above equation for $X_i'\beta$, the desired result:us
 		\begin{align*}
 		Y_i - X_i'\beta - Z_i'\gamma & = Y_i - E^*[Y_i|X_i] + E^*[Z_i|X_i]'\gamma - Z_i'\gamma \\
 		& = (Y_i - E^*[Y_i|X_i]) - (Z_i - E^*[Z_i|X_i])'\gamma
