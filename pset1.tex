@@ -112,6 +112,23 @@ Thus, for any value of $\rho$, if the variance of $W_i$ is equal to $1$, we cann
 		&= F_Y(Q_{\tau}(Y_i)) = \tau \\
 		\implies g(Q_{\tau}(Y_i)) &= F_Z^{-1}(\tau) = Q_{\tau}(Z_i) &\square
 	\end{align*}
+
+	\item Consider an experiment with a treatment variable $T_i \in \{0,1\}$ and an observed outcome $Y_i$. Let $Y_i(1)$ and $Y_i(0)$ denote potential values of $Y_i$ with and without treatment. Define the $\tau-th$ quantile treatment effect
+	$$QTE(\tau) = Q_\tau(Y_i(1)) - Q_\tau(Y_i(0))$$
+
+	Assume that potential outcomes are independent of $T_i$. Show that $QTE(\tau)$ is identified for every $\tau$.
+
+	\begin{proof}\mbox{}\\
+		Fix $\tau$. Consider $Q_\tau(Y_i(1)|T_i = 1)$, the quantile of potential outcomes for the treatment, conditional on treatment. By definition (with $t$ as the indicator variable for integration), we have
+		\begin{align*}
+			\tau & = \int_{-\infty}^{Q_\tau(Y_i(1)|T_i = 1)}t dF_{Y_i(1)|T_i = 1}(t|T_i = 1) \\
+			\tau & = \int_{-\infty}^{Q_\tau(Y_i(1)|T_i = 1)}t dF_{Y_i(1)}(t) &\mbox{By independence of the treatment}\\
+			\Longrightarrow & \\
+			& Q_\tau(Y_i(1)|T_i = 1) = Q_\tau(Y_i(1))
+		\end{align*} 
+		A similar argument holds for $Q_\tau(Y_i(0))$. Thus, we have
+		$$ Q_\tau(Y_i(1)|T_i = 1) - Q_\tau(Y_i(0)|T_i = 0) = Q_\tau(Y_i(1)) - Q_\tau(Y_i(0)) = QTE(\tau)$$
+	\end{proof}
 	
 
 \end{enumerate}
