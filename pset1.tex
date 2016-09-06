@@ -176,15 +176,22 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 \end{enumerate}
 
 \subsection*{Weighted Average Derivative Properties}
-b. Derive the expression for the weights when $\omega (X_i)$ is normally distributed. \\
-\begin{align*}
-\omega(X_i) &= ( E[X | X \geq x] - E[X | X < x] ) (P(X \geq x) ( 1 - P(X \geq x)) \\
-&=\bigg[ \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{1 - \Phi( \frac{x - \mu}{\sigma})} - \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{\Phi( \frac{x - \mu}{\sigma})} \bigg] \bigg[(\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma}) \bigg] \\
-&=\sigma \bigg[\frac{ \phi( \frac{x - \mu}{\sigma}) }{\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma})} \bigg] \bigg[\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma})\bigg] \\
-&=\sigma \phi( \frac{x - \mu}{\sigma})
-\end{align*}
-\medskip
-Then $\frac{Cov(Y_i, X_i)}{var(X_i)} = E[\mu ' (x)]$
 
+\begin{enumerate}[a)]
+
+	\item
+
+	\item Derive the expression for the weights when $\omega (X_i)$ is normally distributed.
+
+	\begin{align*}
+	\omega(X_i) &= ( E[X | X \geq x] - E[X | X < x] ) (P(X \geq x) ( 1 - P(X \geq x)) \\
+	&=\bigg[ \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{1 - \Phi( \frac{x - \mu}{\sigma})} - \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{\Phi( \frac{x - \mu}{\sigma})} \bigg] \bigg[(\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma}) \bigg] \\
+	&=\sigma \bigg[\frac{ \phi( \frac{x - \mu}{\sigma}) }{\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma})} \bigg] \bigg[\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma})\bigg] \\
+	&=\sigma \phi( \frac{x - \mu}{\sigma})
+	\end{align*}
+	\medskip
+	Then $\frac{Cov(Y_i, X_i)}{var(X_i)} = E[\mu ' (x)]$
+
+\end{enumerate}
 
 \end{document}
