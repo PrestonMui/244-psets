@@ -238,7 +238,41 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 
 \begin{enumerate}[a)]
 
-	\item
+	\item The covariance of $X_i$ and $Y_i$ is given by
+
+	\begin{align*}
+		E[(Y_i - \bar{Y})(X_i - \bar{X})] &=  E[Y_i(X_i - \bar{X}) - \bar{Y}(X_i - \bar{X})] \\
+		&= E[Y_i(X_i - \bar{X})]- E[\bar{Y}(X_i - \bar{X})] \\
+		&= E[Y_i(X_i - \bar{X})] \\
+		&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} Y_i (X_i - \bar{X}) f_{y|x}(Y_i|X_i)dy f(x)dx \\
+		&= \int_{-\infty}^{\infty} \mu(X_i) (X_i - \bar{X}) f(x)dx \\
+	\end{align*}
+	Where $f(x)$ is the p.d.f. of $X_i$. Since $\mu$ is continuous and differentiable, the fundamental theorem of calculus implies
+	\begin{align*}
+		\mu(X_i) &= \kappa + \int_{-\infty}^{X_i}\mu'(t) dt
+	\end{align*}
+	where $\kappa = \lim_{X_i \xrightarrow -\infty} \mu(X_i)$. Substituting this in for $\mu(X_i)$,
+	\begin{align*}
+		&= \int_{-\infty}^{\infty} \Big( \kappa + \int_{-\infty}^{X_i}\mu'(t) dt \Big) (X_i - \bar{X}) f(x) dx \\
+		&= \int_{-\infty}^{\infty} \int_{-\infty}^{X_i}\mu'(t) (X_i - \bar{X}) dt f(x)dx \\
+		&= \int_{-\infty}^{\infty} \mu'(t) \int_{t}^{\infty } (X_i - \bar{X}) f(x)dxdt
+	\end{align*}
+	The inner integral is
+	\begin{align*}
+		\int_{t}^{\infty} (X_i - \bar{X}) dx &= \int_{t}^{\infty} \bigg( X_i - \int_{-\infty}^{\infty} u f(u)du \bigg) f(x)dx \\
+		&= \int_{t}^{\infty} X_i f(x)dx - \int_{t}^{\infty} \int_{-\infty}^{\infty} u f(u)du f(x)dx \\
+		&= \int_{t}^{\infty} X_i f(x)dx - \int_{t}^{\infty} \bigg( \int_{-\infty}^{t} u f(u)du + \int_{t}^{\infty} u f(u)du \bigg) f(x)dx \\
+		&= E[X_i | X_i > t] \rho_t - \rho_t \bigg( E[X_i | X_i < t] (1 - \rho_t) + E[X_i | X_i > t] \rho_t \bigg) &\mbox{$\rho_t = P(X_i > t)$} \\
+		&= \rho_t(1-\rho_t) (E[X_i | X_i > t] - E[X_i | X_i < t]) \equiv \omega(t)
+	\end{align*}
+	And so the covariance is
+	\begin{align*}
+		Cov(X_i,Y_i) &= \int_{-\infty}^{\infty} \mu'(t) \omega(t) dt
+	\end{align*}
+	and
+	\begin{align*}
+		Var(X_i) = Cov(X_i,X_i) &= \int_{-\infty}^{\infty} 1 \cdot \omega(t) dt = \int_{-\infty}^{\infty} \omega(t) dt &\square
+	\end{align*}	
 
 	\item Derive the expression for the weights when $\omega (X_i)$ is normally distributed.
 
