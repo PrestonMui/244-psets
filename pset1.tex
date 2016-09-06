@@ -96,7 +96,7 @@ $$Y_i = D_i X_i + (1-D_i)W_i \text{ with } D_i \times X_i \times W_i \sim Bernou
 
 The structure is thus pinned down by the parameters $\mu = (\sigma^2,\rho)$. A structure in this model space that is not identified--either globally or locally--is $\mu' = (1,\rho')$ for some $\rho \in \mathbb{R}$.
 
-By the law of total probability, $$F_{\mu'}(y) = \rho' \phi(y) + (1-\rho')\phi(y) = \phi(y) = \tilde \rho \phi(y) + (1-\tilde \rho)\phi(y) = F_{\tilde \mu}(y)$$ for some $\tilde \rho \in B_{\epsilon}(\rho')$, where $B_{\epsilon}(\rho')$ is an epsilon ball around the true parameter $\rho'$. 
+By the law of total probability, $$f_{\mu'}(y) = \rho' \phi(y) + (1-\rho')\phi(y) = \phi(y) = \tilde \rho \phi(y) + (1-\tilde \rho)\phi(y) = f_{\tilde \mu}(y)$$ for some $\tilde \rho \in B_{\epsilon}(\rho')$, where $B_{\epsilon}(\rho')$ is an epsilon ball around the true parameter $\rho'$. 
 
 Thus, for any value of $\rho$, if the variance of $W_i$ is equal to $1$, we cannot identify the structure generating the observed data.
 
@@ -112,6 +112,23 @@ Thus, for any value of $\rho$, if the variance of $W_i$ is equal to $1$, we cann
 		&= F_Y(Q_{\tau}(Y_i)) = \tau \\
 		\implies g(Q_{\tau}(Y_i)) &= F_Z^{-1}(\tau) = Q_{\tau}(Z_i) &\square
 	\end{align*}
+
+	\item Consider an experiment with a treatment variable $T_i \in \{0,1\}$ and an observed outcome $Y_i$. Let $Y_i(1)$ and $Y_i(0)$ denote potential values of $Y_i$ with and without treatment. Define the $\tau-th$ quantile treatment effect
+	$$QTE(\tau) = Q_\tau(Y_i(1)) - Q_\tau(Y_i(0))$$
+
+	Assume that potential outcomes are independent of $T_i$. Show that $QTE(\tau)$ is identified for every $\tau$.
+
+	\begin{proof}\mbox{}\\
+		Fix $\tau$. Consider $Q_\tau(Y_i(1)|T_i = 1)$, the quantile of potential outcomes for the treatment, conditional on treatment. By definition (with $t$ as the indicator variable for integration), we have
+		\begin{align*}
+			\tau & = \int_{-\infty}^{Q_\tau(Y_i(1)|T_i = 1)}t dF_{Y_i(1)|T_i = 1}(t|T_i = 1) \\
+			\tau & = \int_{-\infty}^{Q_\tau(Y_i(1)|T_i = 1)}t dF_{Y_i(1)}(t) &\mbox{By independence of the treatment}\\
+			\Longrightarrow & \\
+			& Q_\tau(Y_i(1)|T_i = 1) = Q_\tau(Y_i(1))
+		\end{align*} 
+		A similar argument holds for $Q_\tau(Y_i(0))$. Thus, we have
+		$$ Q_\tau(Y_i(1)|T_i = 1) - Q_\tau(Y_i(0)|T_i = 0) = Q_\tau(Y_i(1)) - Q_\tau(Y_i(0)) = QTE(\tau)$$
+	\end{proof}
 	
 
 \end{enumerate}
