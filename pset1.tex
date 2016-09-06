@@ -8,6 +8,7 @@
 \usepackage{amsthm}
 \usepackage[shortlabels]{enumitem}
 \usepackage{amssymb}
+\usepackage{ bbold }
 %-----------------------------------------------------------------------------
 \begin{document}
 \begin{center}
@@ -129,8 +130,41 @@ Thus, for any value of $\rho$, if the variance of $W_i$ is equal to $1$, we cann
 		A similar argument holds for $Q_\tau(Y_i(0))$. Thus, we have
 		$$ Q_\tau(Y_i(1)|T_i = 1) - Q_\tau(Y_i(0)|T_i = 0) = Q_\tau(Y_i(1)) - Q_\tau(Y_i(0)) = QTE(\tau)$$
 	\end{proof}
-	
 
+	\item Suppose the following condition holds with probability one:
+	$$ F_1(Y_i(1)) = F_0(Y_i(0)),$$
+	where $F_t(y)$ is the CDF of $Y_i(t)$. Let $\delta_i = Y_i(1) - Y_i(0)$. Show that $Q_\tau(\delta_i)$ is identified for every $\tau$. Comment on the interpretation of $Q_\tau(\delta_i)$.
+
+	\begin{proof}\mbox{}\\
+		We can write the condition provided in this problem as 
+		$$Pr(F_1(Y_i(1)) - F_0(Y_i(0)) < \epsilon) = 1 \mbox{ } \forall \epsilon > 0$$
+
+		Let $Y_i^*(1)$ be an element in the support of $Y_i(1)$. Set $\tau = F_1(Y_i^*(1))$, so that $Q_\tau(Y_i(1)) = Y_i^*(1)$. Then, define $Y_i^*(0) \equiv Q_\tau(Y_i(0))$. Then, the condition above is equivalent to $$\delta_i^* = Y_i^*(1) - Y_i^*(0)$$ holding with probability one. 
+
+		Since $Y_i^*(0)$ is implicitly defined by our choice of $Y_i^*(1)$, we have that $\delta_i^* = h(Y_i^*(1))$ with probability one for some function $h:\mathbb{S}(Y_i(1)) \to \mathbb{R}$, where $\mathbb{S}(Y_i(1))$ is the support of the random variable $Y_i(1)$.
+
+		Denote $\tilde \tau(x) = F_{Y_i(1)}(x)$ as the the cdf of $Y_i(1)$ evaluated at $x$. 
+
+		The cumulative density function of $\delta_i$ can thus be defined as
+		$$F_{\delta_i}(X) = \int_{-\infty}^{\infty}t \cdot \mathbb{1}(\underbrace{Q_{\tilde \tau(y_1)}(Y_i(1))}_{= y_1^*} - \underbrace{Q_{\tilde \tau(y_1)}(Y_i(0))}_{= y_0^*} < X)dF_{Y_i(1)}(t)$$
+
+		Then, define $Q_\tau(\delta_i) \equiv F_{\delta_i}^{-1}(\tau)$. The idea is that the density of observing $\delta_i^*$ equal to the density associated with $Y_i^*(1)$.
+	\end{proof}
+	
+	\item You have an $iid$ sample $\{Y_i,T_i\}_{i=1}^{N}$ that satisfies the assumptions in parts $b)$ and $c)$. Propose an estimator of $Q_\tau(\delta_i)$.
+
+	In the previous problem, observe that the term within the $\mathbb{1}(\cdot)$ expression corresponds to the QTE, evaluated at $\tau(y_1)$, which we can estimate by comparing $Q_t(Y_i(1)|T_i = 1)$ with $Q_t(Y_i(0)|T_i = 0)$. 
+
+	Let $J$ be the number of observations such that $T_i = 1$, so that the number of untreated observations is $N - J$. Without loss of generality, order $Y_i(1)$ such that $i = 1,2,...,J$ correspond to the treated group and $Y_{j-1} < Y_{j}$. Similarly order the untreated groups for $i > J$.\footnote{Here we are using $Y_i(1)$ as shorthand for $\{ Y_i,T_i = 1\}$}
+
+	Define the empirical estimator of the quantile function as
+	$$\hat Q_{\tau}(Y_i(1)) = \text{inf}\left\{ Y_i(1) | \tau \leq \frac{i}{J} \right\}$$Similarly, define
+	$$\hat Q_{\tau}(Y_i(0)) = \text{inf}\left\{ Y_i(0) | \tau \leq \frac{i-J}{N-J} \right\}$$
+
+	One possible estimator of $F_\delta$ is as follows:
+	$$\hat F_\delta (X) = \sum_{i=1}^J \mathbb{1}\big(Y_i -  \hat Q_{\frac{i}{J}}(Y_i(0)) < X\big)\frac{i}{J}$$
+
+	Then, we define the empricial estimator $\hat Q_{\delta}(\tau) = \text{inf}\left\{ X |\tau \leq \hat F_\delta (X)\right\}$
 \end{enumerate}
 
 
