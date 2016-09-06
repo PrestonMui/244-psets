@@ -153,7 +153,10 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 			\tilde Z_i \tilde Y_i & = \tilde Z_i \tilde Z_i'\gamma + \tilde Z_i\epsilon_i\\
 			E[\tilde Z_i \tilde Y_i]& = E[\tilde Z_i \tilde Z_i']\gamma + E[\tilde Z_i\epsilon_i]
 		\end{align*}
-		Observe that $E[Z_i\epsilon_i] = 0 \Longrightarrow E[\epsilon|Z_i] = 0 \Longrightarrow E[g(Z_i)\epsilon_i] = 0 \Longrightarrow E[\tilde Z_i \epsilon_i] = 0$.\footnote{Suppose the first implication did not hold, so that $E[\epsilon|Z_i] = a$ for some $a \in \mathbb{R}$. Then $E[Z_i\epsilon_i] = E[Z_iE[\epsilon|Z_i]] = aE[Z_i]$. This final term is not equal to zero except for the special case when $E[Z_i] = 0$.} Thus, we have $$E[\tilde Z_i \tilde Y_i] = E[\tilde Z_i \tilde Z_i']\gamma,$$
+		Observe that $E[\tilde Z_i\epsilon_i] = 0$ since $\tilde Z_i$ is a linear combination of $Z_i$ and $X_i$, both of which have mean zero correlation with $\epsilon_i$. More precisely, write $E^*[Z_i|X_i] = \Pi X_i$ for some matrix of coefficients of $\Pi$. So,
+		$$E[\tilde Z_i \epsilon_i] = E[Z_i \epsilon_i] - E[\Pi X_i\epsilon_i] = 0 - \Pi 0 = 0.$$
+		Thus, we have
+		$$E[\tilde Z_i \tilde Y_i] = E[\tilde Z_i \tilde Z_i']\gamma,$$
 		which after rearranging becomes $\gamma = E[\tilde Z_i \tilde Z_i']^{-1}E[\tilde Z_i \tilde Y_i],$ the desired result.
 	\end{proof}
 	\item Show that $Y_i - E^*[Y_i|X_i, Z_i] = (Y_i - E^*[Y_i|X_i]) - (Z_i - E^*[Z_i|X_i]'\gamma)$
