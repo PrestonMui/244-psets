@@ -67,7 +67,15 @@ where $F_{Y|X}$ is the conditional c.d.f. of $Y$ given $X$ implied by the j.d.f.
 
 	\item These likelihoods are, naturally, used in the maximum likelihood estimator.
 
-	\item The parameters $(a, \mu, \sigma)$ are set-identified (any two will imply the third).
+	\item The parameter $\sigma$ is identified. Consider $E[h_i = 40 | w_i] = \Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} \bigg)$. If the true joint distribution of $(w_i, h_i)$, then one can obtain
+	\begin{align*}
+		\frac{d E[h_i = 40 | w_i]}{w_i} &= \frac{d \Phi(\cdot)}{d w_i} \\
+		&= \phi \bigg( \Phi^{-1} \bigg( E[h_i = 40 | w_i] \bigg) \bigg) \frac{\sigma}{w_i}
+	\end{align*}
+	and so $\sigma$ is identified. Given a $\sigma$, one can then set-identify $(a, \mu)$ from
+	\begin{align*}
+		\frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} &= \Phi^{-1} \bigg( E[h_i = 40 | w_i] \bigg)
+	\end{align*}
 
 	\item Derive an expression for the probability of working 20 and 40 hours a week when the choice set for hours is $\{ 10,20,40 \}$: The utility from working 20 and 40 hours is as above, and the utility of working 10 hours is
 	\begin{align*}
@@ -87,7 +95,11 @@ where $F_{Y|X}$ is the conditional c.d.f. of $Y$ given $X$ implied by the j.d.f.
 		\Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 20^a - 10^a) - \mu}{\sigma} \bigg)  \\ - \Phi \bigg( \frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma} \bigg)
 	\end{align*}
 	
-	\item With the addition of the option to work 10 hours, the parameters are still set-identified, in the sense that choosing one value would imply the others.
+	\item As above, $\sigma$ is identified. With the addition of the observation of the 10 hours option, so are $a$ and $\mu$. Recall from above that $\frac{\log w_i + \log (1+a) - \log(2 \cdot 40^a - 20^a) - \mu}{\sigma}$ is determined from $\Phi^{-1} \bigg( E[h_i = 40 | w_i] \bigg)$. Denote $\Omega \equiv \Phi^{-1} \bigg( E[h_i = 40 | w_i] \bigg)$. Then, one should have that
+	\begin{align*}
+		E[h_i = 20 | w_i ] &= \Phi(\Omega + \frac{a\log(2)}{\sigma}) - \Phi(\Omega)
+	\end{align*}
+	Since $\Omega$ and $\sigma$ are identified, and $\Phi$ is increasing, so too is $a$. Then, one can infer $\mu$ from $\Omega$ and the identified value of $a$.	
 
 \end{enumerate}
 
