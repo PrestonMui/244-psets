@@ -275,15 +275,19 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 	\end{align*}	
 
 	\item Derive the expression for the weights when $X_i$ is normally distributed.
-
 	\begin{align*}
-	\omega(X_i) &= ( E[X | X \geq x] - E[X | X < x] ) (P(X \geq x) ( 1 - P(X \geq x)) \\
-	&=\bigg[ \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{1 - \Phi( \frac{x - \mu}{\sigma})} - \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{\Phi( \frac{x - \mu}{\sigma})} \bigg] \bigg[\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma})) \bigg] \\
-	&=\sigma \bigg[\frac{ \phi( \frac{x - \mu}{\sigma}) }{\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma}))} \bigg] \bigg[\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma}))\bigg] \\
-	&=\sigma \phi( \frac{x - \mu}{\sigma})
+		\omega(x) &= ( E[X | X \geq x] - E[X | X < x] ) (P(X \geq x) ( 1 - P(X \geq x)) \\
+		&=\bigg[ \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{1 - \Phi( \frac{x - \mu}{\sigma})} - \mu + \sigma \frac{\phi (\frac{x - \mu}{\sigma})}{\Phi( \frac{x - \mu}{\sigma})} \bigg] \bigg[\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma})) \bigg] \\
+		&=\sigma \bigg[\frac{ \phi( \frac{x - \mu}{\sigma}) }{\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma}))} \bigg] \bigg[\Phi( \frac{x - \mu}{\sigma})(1- \Phi( \frac{x - \mu}{\sigma}))\bigg] \\
+		&=\sigma \phi( \frac{x - \mu}{\sigma})
 	\end{align*}
-	\medskip
-	Then $\frac{Cov(Y_i, X_i)}{var(X_i)} = E[\mu ' (x)]$
+	Plugging this into $\frac{Cov(Y_i, X_i)}{var(X_i)}$,
+	\begin{align*}
+		\frac{Cov(Y_i, X_i)}{var(X_i)} &= \frac{\int_{-\infty}^{\infty} \mu'(t) \omega(t) dt}{\int_{-\infty}^{\infty} \omega(t) dt} \\
+		&= \frac{\int_{-\infty}^{\infty} \mu'(t) \sigma \phi( \frac{t - \mu}{\sigma}) dt}{\int_{-\infty}^{\infty} \sigma \phi( \frac{t - \mu}{\sigma}) dt} \\
+		&= \sigma \frac{\int_{-\infty}^{\infty} \mu'(t) \phi( \frac{t - \mu}{\sigma}) dt}{\sigma} &\mbox{Since $\phi((t-\mu)/\sigma$ is a p.d.f.} \\
+		&= \int_{-\infty}^{\infty} \mu'(t) \phi( \frac{t - \mu}{\sigma}) dt = \mathbf{E}[\mu'(X_i)] &\square
+	\end{align*}
 
 	\item Prove that for the scalar random variables Y and S and a vector $X_i$ \\
 	\begin{align*}
