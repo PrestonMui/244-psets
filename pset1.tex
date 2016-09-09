@@ -251,7 +251,7 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 	\begin{align*}
 		\mu(X_i) &= \kappa + \int_{-\infty}^{X_i}\mu'(t) dt
 	\end{align*}
-	where $\kappa = \lim_{X_i \xrightarrow -\infty} \mu(X_i)$. Substituting this in for $\mu(X_i)$,
+	where $\kappa = \lim_{X_i \rightarrow -\infty} \mu(X_i)$. Substituting this in for $\mu(X_i)$,
 	\begin{align*}
 		&= \int_{-\infty}^{\infty} \Big( \kappa + \int_{-\infty}^{X_i}\mu'(t) dt \Big) (X_i - \bar{X}) f(x) dx \\
 		&= \int_{-\infty}^{\infty} \int_{-\infty}^{X_i}\mu'(t) (X_i - \bar{X}) dt f(x)dx \\
@@ -285,49 +285,45 @@ Suppose the population projection $E^*[Y_i|X_i,Z_i] = X_i'\beta + Z_i'\gamma$. L
 	\medskip
 	Then $\frac{Cov(Y_i, X_i)}{var(X_i)} = E[\mu ' (x)]$
 
-\end{enumerate}
-
-7c. Prove that for the scalar random variables Y and S and a vector $X_i$ \\
+	\item Prove that for the scalar random variables Y and S and a vector $X_i$ \\
 	\begin{align*}
 		\frac{E[Y_i(S_i - E[S_i|X_i])]}{E[S_i(S_i - E[S_i|X_i])]} = \frac{E [\int \mu'_X(t) 		\omega_X(t) dt]}{E[\int \omega_X(t) dt]}
 		\end{align*}
-where $\mu_X(t) = E[Y_i|X_i, S_i=t]$. What is $\omega_X(t)$? \\
-\medskip
+	where $\mu_X(t) = E[Y_i|X_i, S_i=t]$. What is $\omega_X(t)$? \\
 
-\textit{Proof} \\
-Focusing on the numerator:
+	\textit{Proof}. Focusing on the numerator:
 	\begin{align*}
 		E[Y_i(S_i - E[S_i|X_i])] &= E[E[Y_i|S_i, X_i] (S_i - E[S_i|X_i])]
 	\end{align*}
-And $E[Y_i|X_i, S_i=t]=\mu_{X} = c + \int^{X_i}_{-\infty} \mu'_X(t) dt$  by the Fundamental Theorem of Calculus, so the expression becomes: 
+	And $E[Y_i|X_i, S_i=t] = \mu_{X}(t) = c + \int^{X_i}_{-\infty} \mu'_X(t) dt$  by the Fundamental Theorem of Calculus, where $c = \lim_{t \rightarrow -\infty} \mu_X(t)$, so
 	\begin{align*}
-		&= E[c+ (\int^{S_i}_{-\infty} \mu'_X(t) dt)  (S_i - E[S_i|X_i])] \\
-		&= E[ E[(\int^{S_i}_{-\infty} \mu'_X(t) dt (S_i - E[S_i|X_i]) | X_i] ]\\
-		&=E[ \int^{+\infty}_{-\infty}\int^{S_i}_{-\infty} \mu'_X(t) dt)  (S_i - E[S_i|X_i])]f_{S|X}ds ]
+		E[Y_i(S_i - E[S_i|X_i])] &= E\bigg[ (c + \int^{S_i}_{-\infty} \mu'_X(t) dt)  (S_i - E[S_i|X_i]) \bigg] \\
+		&= E\bigg[ E[\int^{S_i}_{-\infty} \mu'_X(t) dt (S_i - E[S_i|X_i]) | X_i] \bigg]\\
+		&= E\bigg[ \int^{+\infty}_{-\infty}\int^{S_i}_{-\infty} \mu'_X(t) dt (S_i - E[S_i|X_i]) f_{S|X}ds \bigg]
 	\end{align*}
-Reversing the order of integration: 
+	Reversing the order of integration:
 	\begin{align}
-		&=E[ \int^{+\infty}_{-\infty} \mu'_X(t) \int^{+ \infty}_{t} ( S_i - E[S_i|X_i]) f_{S|X} ds dt ]
+		&= E \bigg[ \int^{+\infty}_{-\infty} \mu'_X(t) \int^{+ \infty}_{t} ( S_i - E[S_i|X_i]) f_{S|X} ds dt \bigg]
 	\end{align}
-Focusing on the inner integral:
+	Focusing on the inner integral:
 	\begin{align}
 		\int^{+ \infty}_{t} ( S_i - E[S_i|X_i]) f_{S|X} ds &= \int^{+ \infty}_{t} S_i f_{S|X} ds - \int^{+ \infty}_{t} E[S_i|X_i] f_{S|X} ds \\
 		&=(E[S_i |  X_i, S_i \geq t] - E[S_i | X_i] ) P(S_i \geq t | X_i) 
 	\end{align}		
-We can rewrite $E[S_i|X_i]$ as $E[S_i|X_i, S_i \geq t]P[S_i\geq t|X_i] + E[S_i|X_i, S_i < t](1 - P[S_i\geq t|X_i])$. Plugging this in for $E[S_i | X_i]$ then (3) becomes:
+	We can rewrite $E[S_i|X_i]$ as $E[S_i|X_i, S_i \geq t]P[S_i\geq t|X_i] + E[S_i|X_i, S_i < t](1 - P[S_i\geq t|X_i])$. Plugging this in for $E[S_i | X_i]$ then (3) becomes:
 	\begin{align}
 		&=(E[S_i | S_i \geq t, X_i ] - E[S_i | S_i < t, X_i ] )(P(S \geq t | X_i)( 1 - P(S \geq t | X_i)) = \omega_X(t)
 	\end{align}
-Going back to the full expression in (1), plugging in (4):
+	Going back to the full expression in (1), plugging in (4):
 	\begin{align*}
-		 &=E [\int \mu'_X(t) \omega_X(t) dt]
+		&= E \bigg[ \int \mu'_X(t) \omega_X(t) dt \bigg]
 	\end{align*}
-\\
-For the denominator, we have a parallel set up except $E[S_i| X_i, S_i=t]$, the derivative of which is 1, so: 
+	For the denominator, we have a parallel set up except $E[S_i| X_i, S_i=t]$, the derivative of which is 1, so: 
 	\begin{align*}
 		\frac{E[Y_i(S_i - E[S_i|X_i])]}{E[S_i(S_i - E[S_i|X_i])]} = \frac{E [\int \mu'_X(t) 		\omega_X(t) dt]}{E[\int \omega_X(t) dt]}
 	\end{align*}
-	where $\omega_X(t) = ( E[S_i | X_i, S_i \geq t ] -E[S_i | X_i, S_i < t])(P[S_i\geq t| X_i])(1 -  P[S_i\geq t| X_i])$ 
+	where $\omega_X(t) = ( E[S_i | X_i, S_i \geq t ] -E[S_i | X_i, S_i < t])(P[S_i\geq t| X_i])(1 -  P[S_i\geq t| X_i])$.
 
+\end{enumerate}
 
 \end{document}
