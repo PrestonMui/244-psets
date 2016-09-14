@@ -1,0 +1,1 @@
+% Function that calculates the negative log-likelihood of data input
