@@ -2,7 +2,7 @@
 
 % Set seed
 rng(1234);
-N = 500
+N = 500;
 
 % Generate X and e
 X = randn(N,1);
@@ -70,6 +70,9 @@ fisher = fisher / N;
 
 % average (negative) hessian
 hessian = zeros(3,3);
+Phi = normcdf(YHat);
+phi = normpdf(YHat);
+
 for i = 1:N
 	y = Y(i);
 	phi = normpdf(YHat(i));
