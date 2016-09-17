@@ -62,24 +62,24 @@
 
 	\item (Matlab program attached)
 
-	\item The ML point estimates of $\hat{\beta}^{con} = (\hat{\alpha},\hat{b})$ are $(-0.0175,0.9159)$. The standard errors are $(0.0918,0.1301)$.
+	\item The ML point estimates of $\hat{\beta}^{con} = (\hat{\alpha},\hat{b})$ are $(-0.0175,0.9159)$. The standard errors are $(0.3030,0.3607)$, respectively.
 
-	\item Score test: Regressing the restricted model's generalized residuals, given by
+	\item Score test: Following Wooldridge (2010), page 570, the $LM$ statistic is the ESS from the following regression
 	\begin{align*}
-		gres_i &= \frac{Y_i \phi(X_i'\hat{\beta}^{con})}{\Phi(X_i'\hat{\beta}^{con})} - \frac{(1 - Y_i)\phi(X_i' \hat{\beta}^{con})}{1 - \Phi(X_i'\hat{\beta}^{con})}
+		\frac{\hat{u}_i}{\sqrt{\hat{G}_i (1 - \hat{G}_i)}} &= \alpha \frac{\hat{g}_i}{\sqrt{\hat{G}_i(1 - \hat{G}_i)}} x_i + \gamma  \frac{\hat{g}_i}{\sqrt{\hat{G}_i(1 - \hat{G}_i)}} z_i
 	\end{align*}
-	on $X_i^2$ yields a coefficient of $0.0039$ with a p-value of effectively 0, rejecting the null of 0.
+	where $x_i$ is the regressor matrix in the unconstrained regression (constant and $X$) and $z_i$ is the vector of $X_i^2$. The ESS from this regression was $0.2963$, which has a p-value of $0.58621$. So, one does not reject the null that $b_2 = 0$.
 
-	\item The unrestricted model yields point estimates of $\hat{\beta}^{unc} = (\hat{\alpha},\hat{b},\hat{b_2}) = (-0.0435, 0.9175, 0.0428)$. The wald test, which tests $g(\beta) = 0$, where
+	\item The unrestricted model yields point estimates of $\hat{\beta}^{unc} = (\hat{\alpha},\hat{b},\hat{b_2}) = (-0.0435, 0.9175, 0.0428)$. The Wald test will test the null $g(\beta) = 0$ where
 	\begin{align*}
 		g(\beta) &\equiv (0, 0, 1) \cdot \beta = b_2 \\
 		G(\beta) &\equiv \frac{\partial g(\beta)}{\partial \beta} = (0, 0, 1)
 	\end{align*}
 	and the Wald statistic is given by
 	\begin{align*}
-		N \cdot \hat{b_2} \cdot \bigg( G \cdot H^{-1} \cdot G' \bigg)^{-1} \cdot \hat{b_2}
+		N \cdot \hat{b_2} \cdot \bigg( G \cdot \frac{1}{\sqrt{N}}H^{-1} \cdot G' \bigg)^{-1} \cdot \hat{b_2}
 	\end{align*}
-	where $H$ is the average Hessian at the ML estimate. Here, the Wald evaluates to 0.3336, which has a p-value of $0.5636$ under the $\chi^2$ distribution with d.f. 1, much higher than the $0$ obtained in part b.
+	where $H$ is the average Hessian at the ML estimate. Because we know that the model is correctly specified, I use the inverse Hessian instead of the sandwich estimator. The Wald evaluates to 7.4592, which has a p-value of $0.0063$ under the $\chi^2$ distribution with d.f. 1, so one rejects the null that $b_2 = 0$. This is starkly different from the score test result, which did not reject the null. This makes sense, as the Wald tends to reject more than the LM test. If one bumps the number of observations up (say, to 5000), both tests reject the null.
 
 \end{enumerate}
 
