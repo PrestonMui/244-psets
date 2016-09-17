@@ -83,4 +83,42 @@
 
 \end{enumerate}
 
+\subsection*{6. Random Coefficient Binary Choice Model:}
+\begin{enumerate}[a)]
+	\item As was derived in the lecture notes, the simulated log likelihood can be derived as follows. Denote the Logistic cdf with $\Lambda$ and its pdf with $\lambda$.
+
+	First observe that
+	$$Pr(Y_i = 1 | X_i, b_i) = Pr(\epsilon_i > -b_i x_i) = 1- Pr(\epsilon_i < - b_i x_i) = 1- \Lambda(-b_i x_i) = \Lambda(b_ix_i)$$
+	Thus, assuming that $b_i$ and $\epsilon_i$ are independent:
+	$$Pr(Y_i = 1|X_i) = \int \Lambda(b x_i) \frac{1}{\sigma}\phi(\frac{b_i - \mu}{\sigma})db$$
+
+	The likelihood of this model for a single observation is $$L(Y_i,X_i;\mu,\sigma) = \left(\int \Lambda(b x_i) \frac{1}{\sigma}\phi(\frac{b_i - \mu}{\sigma})db\right)^{Y_i}\left(1 - \int \Lambda(b x_i) \frac{1}{\sigma}\phi(\frac{b_i - \mu}{\sigma})db\right)^{1-Y_i}$$
+
+	Thus, for \textbf{fixed} random draws $\left\{u_i\right\}_{m=1}^{M}$ from $\mathcal{N}(0,1)$, the simulated likelihood is
+	$$\hat L_M(Y_i,X_i,\mu,\sigma) 
+	= 
+	\left(\frac{1}{M}\sum_{m=1}^M\Lambda(\underbrace{(\mu+\sigma u_{im})}_{\equiv b}X_i)\right)^{Y_i}
+	\left(1-\frac{1}{M}\sum_{m=1}^M\Lambda(\underbrace{(\mu+\sigma u_{im})}_{\equiv b}X_i)\right)^{1-Y_i}
+	$$
+	
+	Clearly, taking logs (of the product of all the likelihoods) allows us to recover the simulated log-likelihood of the full sample. 
+
+	Let's differentiate with respect to $\mu$ and $\sigma$!
+
+	For $\mu$:
+	\begin{align*}
+		\frac{\partial}{\partial \mu} & \frac{1}{N}\sum_{i}^{N} Y_i log\left(\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) + (1-Y_i) log\left(1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) \\
+		= & \frac{1}{N}\sum_i^N \frac{Y_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} \\
+		& - (1-Y_i)\frac{1}{N}\sum_i^N \frac{(1-Y_i)\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)}  
+	\end{align*}
+	For $\sigma$:
+		\begin{align*}
+		\frac{\partial}{\partial \sigma} & \frac{1}{N}\sum_{i}^{N} Y_i log\left(\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) + (1-Y_i) log\left(1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) \\
+		= & \frac{1}{N}\sum_i^N \frac{Y_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i u_{im}}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} \\
+		& - (1-Y_i)\frac{1}{N}\sum_i^N \frac{(1-Y_i)\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i u_{im}}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)}  
+	\end{align*}
+
+	\item 
+\end{enumerate}
+
 \end{document}
