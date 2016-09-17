@@ -9,6 +9,18 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage{amssymb}
 \usepackage{ bbold }
+\usepackage{graphicx} %included to insert a graph
+\usepackage{caption} %included to include a caption over the graph
+\usepackage{booktabs} %needed for the table's toprule midrule and bottomrule sequences
+\usepackage[section]{placeins} %to keep graphs and tables in the very section to which they belong 
+\usepackage{pdflscape} %to include the landscape environment 
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{longtable}
 %-----------------------------------------------------------------------------
 \begin{document}
 \begin{center}
@@ -81,6 +93,68 @@
 	\end{align*}
 	where $H$ is the average Hessian at the ML estimate. Because we know that the model is correctly specified, I use the inverse Hessian instead of the sandwich estimator. The Wald evaluates to 7.4592, which has a p-value of $0.0063$ under the $\chi^2$ distribution with d.f. 1, so one rejects the null that $b_2 = 0$. This is starkly different from the score test result, which did not reject the null. This makes sense, as the Wald tends to reject more than the LM test. If one bumps the number of observations up (say, to 5000), both tests reject the null.
 
+\end{enumerate}
+
+\subsection*{4. Clustered DGP in Stata}
+
+\begin{enumerate}[a)]
+
+	\item Regressing $Y_{ic}$ on $D_{ic}$, we get the results in table 1.
+		\input{ps2_4a_regs.tex} 
+
+	The basic SE are 0.03237. The standard errors are slightly larger (0.03244) when we correct for heteroskedasticity in column 2 and significantly larger (0.09508) when we account for the intracluster correlation of observations from the same cluster.
+
+	\item Changing $\sigma^2_{\eta}$ to 0. Regressing $Y_{ic}$ on $D_{ic}$, we get the results in table :
+		\input{ps2_4b_regs.tex}
+
+	The standard errors are fairly similar for columns 1 and 2 to what we had in A. They are 0.02732 for the regular SE, 0.027731 for robust SE.  The clustered SE (0.02420) are similar to the magnitude of the non-clustered version.
+
+	\item  Comment on your differences in the answers to a) and b). \\
+The SE are fairly similar in columns 1 and 2 for parts a) and b) though they are slightly smaller in part b as a result of the lower variance of $y_{ic}$ in part b. In part b since there is no intra-cluster correlation in the coefficient on $d_{ic}$ the clustered standard errors are of a similar magnitude to the non-clustered version (0.02420). 
+
+	\item In table 3, we see that the simulation rejects the null that the coefficient on $d_{ic}$=1 57\% of the time when we don't cluster our standard errors and about 5\% (which we would expect) when we cluster. So the non-clustered version is rejecting too often and the clustered version is rejecting at about the rate of p which we set.
+		\input{ps2_4d_regs.tex}
+
+	\item Here we have that the regression with non-clustered standard errors rejects the test that the coefficient equals the average of the cluster level $\eta$'s 3\% of the time and the clustered standard errors are never rejecting, so in this case clustering is causing us not reject often enough. \\
+		\input{ps2_4e_regs.tex}
+
+	\item TBD
+\end{enumerate}
+
+
+\newpage
+\subsection*{5. CPS and WLS}
+
+\begin{enumerate}[a)]
+
+	\item See results in column 1 of table 5. 
+		\input{ps2_5a.tex}
+
+	\item Collapsed results used in analysis below.
+
+	\item See column 2 of table 5. The coefficients are identical (as we would expect) but the standard errors are much smaller when we weight by bin size. 
+
+	\item If wages are $iid$ within a cell, then the variance of each cell is $\sigma^2 / N_c$ where $\sigma^2$ is the population variance and $N_c$ is the number of observations in the cell.
+ 
+	\item Formula above is used to calculate the variance of the cell means.
+
+	\item See results in column 3 of table 5. 
+
+	\item With an RSS of 0.133 and 38 degrees of freedom we are not able to reject this model at the 5\% level. In other words we cannot reject our model explains the data up to a sampling error. 
+
+	\item See results in table 7. 
+		\input{ps2_5h.tex}
+	\item With an RSS of 0.009 and 15 degrees of freedom we cannot reject this goodness of fit of this model at the 5\% level either. 
+	\item See fig. \ref{ps2_5j}. The model does a very nice job of fitting the data. The place it has a bit of trouble fitting is for older more educated individuals. The model overestimates the wages of 65+ males with some college and underestimates the wages for males with a BA or more. 
+
+		\begin{figure}
+			\begin{center}
+				\caption{Predicted and actual log wages by subgroup} 	\label{ps2_5j}
+				\includegraphics[scale=2]{ps2_5j.pdf}
+			\end{center}
+		\end{figure}
+
+	\item TBD
 \end{enumerate}
 
 \subsection*{6. Random Coefficient Binary Choice Model:}

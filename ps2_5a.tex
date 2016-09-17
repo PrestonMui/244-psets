@@ -1,0 +1,45 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Wage Regression (Weighted)}
+\begin{tabular}{l*{3}{c}}
+\toprule
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}\\
+                    &\multicolumn{1}{c}{Log wage}&\multicolumn{1}{c}{Log wage (weighted by cell size)}&\multicolumn{1}{c}{Log wage (weighted by 1/cell var)}\\
+\midrule
+agecat==2           &       0.314***&       0.314***&       0.314***\\
+                    &   (0.00746)   &   (0.00073)   &   (0.00047)   \\
+\addlinespace
+agecat==3           &       0.458***&       0.458***&       0.458***\\
+                    &   (0.00731)   &   (0.00071)   &   (0.00046)   \\
+\addlinespace
+agecat==4           &       0.494***&       0.494***&       0.494***\\
+                    &   (0.00771)   &   (0.00075)   &   (0.00048)   \\
+\addlinespace
+agecat==5           &       0.472***&       0.472***&       0.472***\\
+                    &   (0.00966)   &   (0.00094)   &   (0.00061)   \\
+\addlinespace
+agecat==6           &       0.295***&       0.295***&       0.295***\\
+                    &   (0.01651)   &   (0.00161)   &   (0.00104)   \\
+\addlinespace
+educcat==2          &       0.265***&       0.265***&       0.265***\\
+                    &   (0.00754)   &   (0.00073)   &   (0.00047)   \\
+\addlinespace
+educcat==3          &       0.415***&       0.415***&       0.415***\\
+                    &   (0.00764)   &   (0.00074)   &   (0.00048)   \\
+\addlinespace
+educcat==4          &       0.771***&       0.771***&       0.771***\\
+                    &   (0.00783)   &   (0.00076)   &   (0.00049)   \\
+\addlinespace
+Sex                 &      -0.261***&      -0.261***&      -0.261***\\
+                    &   (0.00458)   &   (0.00045)   &   (0.00029)   \\
+\addlinespace
+Constant            &       2.153***&       2.153***&       2.153***\\
+                    &   (0.00995)   &   (0.00097)   &   (0.00063)   \\
+\midrule
+\(R^{2}\)           &       0.297   &       0.978   &       0.978   \\
+Observations        &       56182   &       56182   &      135056   \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{4}{l}{\footnotesize * p<0.10, ** p<0.05, *** p<0.01}\\
+\end{tabular}
+\end{table}
