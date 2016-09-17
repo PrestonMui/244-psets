@@ -108,14 +108,12 @@
 	For $\mu$:
 	\begin{align*}
 		\frac{\partial}{\partial \mu} & \frac{1}{N}\sum_{i}^{N} Y_i log\left(\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) + (1-Y_i) log\left(1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) \\
-		= & \frac{1}{N}\sum_i^N \frac{Y_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} \\
-		& - (1-Y_i)\frac{1}{N}\sum_i^N \frac{(1-Y_i)\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)}  
+		= & \frac{1}{N}\sum_i^N \left[\frac{Y_iX_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} - \frac{(1-Y_i)X_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} \right] 
 	\end{align*}
 	For $\sigma$:
 		\begin{align*}
 		\frac{\partial}{\partial \sigma} & \frac{1}{N}\sum_{i}^{N} Y_i log\left(\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) + (1-Y_i) log\left(1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) \\
-		= & \frac{1}{N}\sum_i^N \frac{Y_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i u_{im}}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} \\
-		& - (1-Y_i)\frac{1}{N}\sum_i^N \frac{(1-Y_i)\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)X_i u_{im}}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)}  
+		= & \frac{1}{N}\sum_i^N \left[\frac{Y_i X_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)u_{im}}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} - \frac{(1-Y_i)X_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i) u_{im}}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)}\right]
 	\end{align*}
 
 	\item 
