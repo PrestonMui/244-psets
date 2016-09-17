@@ -114,9 +114,26 @@
 		\begin{align*}
 		\frac{\partial}{\partial \sigma} & \frac{1}{N}\sum_{i}^{N} Y_i log\left(\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) + (1-Y_i) log\left(1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)\right) \\
 		= & \frac{1}{N}\sum_i^N \left[\frac{Y_i X_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i)u_{im}}{\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)} - \frac{(1-Y_i)X_i\frac{1}{M}\sum_{m=1}^M\lambda((\mu+\sigma u_{im})X_i) u_{im}}{1-\frac{1}{M}\sum_{m=1}^M\Lambda((\mu+\sigma u_{im})X_i)}\right]
-	\end{align*}
+		\end{align*}
+	\item See \textit{max\_sml.m} file.
+	\item See \textit{max\_sml.m} file.
+	\item These results are invariant to initial conditions:
+	$$\begin{bmatrix}\mu \\ ln(\sigma)\end{bmatrix} 
+	= \begin{bmatrix} 1.6011 \\ 0.5139 \end{bmatrix}$$
+	\item Let $\hat \theta_{MSL}$ denote the estimated parameters from the method of simulated likelihood and the true parameters $\theta = [\mu, \sigma]'$. Under proper specification, we know that
+	$$\sqrt{N}(\hat \theta_{MSL} - \theta) \to 
+	\mathcal{N}(\mathbf{0},\mathbf{H}(\theta)^{-1})$$
+	By the delta-method, with $g(\theta) \equiv [\mu ln(\sigma)]'$, we have that
+	$$\sqrt{N}(g(\hat \theta_{MSL}) - g(\theta)) \to 
+	\mathcal{N}(\mathbf{0},\mathbf{G}\mathbf{H}(\theta)^{-1}\mathbf{G})$$
+	where $$\mathbf{G} \equiv \frac{\partial g(\theta)}{\partial \theta} = \begin{bmatrix}1 & 0 \\ 0 & \frac{1}{\sigma}\end{bmatrix}$$
 
-	\item 
+	When we calculate the square root of the diagonal elements of $\frac{1}{N}\mathbf{H}(\hat \theta)^{-1}$, we derive the standard errors of our estimates of $\mu$ and $\ln(\sigma)$: $(0.2633,0.3884)$.
+	
+	\item To calculate the standard errors for the incorrect model, we replace $\mathbf{H}(\theta)^{-1}$ with $\mathbf{H}(\theta)^{-1}\mathbf{V_s}\mathbf{H}(\theta)^{-1}$, where $\mathbf{V_s}$ is the population variance-covariance matrix of the scores---defined by the the criterion function we are maximizing. 
+
+	Again, we use the analogy principle to replace the asymptotic variance terms with the simulated likelihood, sample averages. This yields standard errors of $\mu$ and $ln(\sigma)$: $(0.4839,0.6417)$.
+
 \end{enumerate}
 
 \end{document}
