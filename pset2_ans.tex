@@ -19,6 +19,123 @@
 }
 \end{center}
 
+\subsection*{1. Problem 1}
+
+\bigskip \textit{Subproblem A}
+
+\bigskip The Delta Method (or the So Called ``Delta Method," so called by Dr. James Powell) says that, if we have a random vector $\theta$ that is asymptotically normal with
+
+\[\sqrt{N}(\hat{\theta}-\theta_0) \overset{d}{\to} N(0,\Sigma)\]
+
+then for some $g(\theta)$ that is continuously differentiable at $\theta=\theta_0$ with Jacobian matrix
+
+\[G_0=\frac{\partial g(\theta_0)}{\partial \theta'}\]
+
+we have that $g(\theta)$ is also asymptotically normal with
+
+\[\sqrt{N}(g(\hat{\theta})-g(\theta_0) \overset{d}{\to} N(0,G_0' \Sigma G_0)\]
+
+In the context of Fehr and Goette (2007), observe that
+
+\[\theta =
+\left(
+\begin{array}{c}
+	\bar{Y_A}\\
+	\bar{Y_B}\\
+\end{array}
+\right)\]
+
+that
+
+\[\Sigma=
+\begin{bmatrix}
+\sigma_{\bar{Y_A}}^2 & \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \\
+\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \sigma_{\bar{Y_B}}^2 &
+\end{bmatrix}\]
+
+and that
+
+\[g(\theta)=\frac{\bar{Y_A}-\bar{Y_B}}{\bar{Y_B}}\]
+
+We can find these values in the reprinted table. $\bar{Y_A}=4131.33$, $\bar{Y_B}=3005.75$, $\sigma_{\bar{Y_A}}^2=(2669.21)^2$, and $\sigma_{\bar{Y_B}}^2=(2054.20)^2$. But we still have to do a little bit of work.
+
+\bigskip Differentiating $g$ with respect to each of its arguments and evaluating them at $\theta_0$ yields $G$.
+
+\[G =
+\left(
+\begin{array}{c}
+\frac{\partial g}{\partial \bar{Y_A}} = \frac{1}{\bar{Y_B}}\\
+\frac{\partial g}{\partial \bar{Y_B}} = \frac{-\bar{Y_A}}{Y_B}\\
+\end{array}
+\right)
+\Rightarrow 
+G_0 =
+\left(
+\begin{array}{c}
+\frac{\partial g(\theta_0)}{\partial \bar{Y_A}}=\frac{1}{4131.33}\\
+\frac{\partial g(\theta_0)}{\partial \bar{Y_B}}=\frac{-3005.75}{4131.33}\\
+\end{array}
+\right)
+\]
+
+The table also gives us $\sigma_{\bar{Y_A}-\bar{Y_B}}$, which combined with a simple variance identity, will gives us $\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}}$.
+
+\[VAR(\bar{Y_A}-\bar{Y_B})=VAR(\bar{Y_A})-VAR(\bar{Y_B})-2COV(\bar{Y_A},\bar{Y_B})\]
+
+\[\Rightarrow COV(\bar{Y_A},\bar{Y_B})=\frac{VAR(\bar{Y_A})-VAR(\bar{Y_B})-VAR(\bar{Y_A}-\bar{Y_B})}{2}\]
+
+\[\Rightarrow \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}}=\frac{(2669.21)^2-(2054.20)^2-(519.72)^2}{2}\]
+
+\[\Rightarrow \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}}=1317417.75\]
+
+Now we can set up the matrix algebra to use the Delta Method to compute an \textit{estimate} of the standard error, S.
+
+\[S^2 = G_0' \Sigma G_0 = \begin{matrix}\begin{pmatrix}\frac{\partial g}{\partial \bar{Y_A}} & \frac{\partial g}{\partial \bar{Y_B}}\end{pmatrix}\\\mbox{}\end{matrix}
+\begin{bmatrix}
+\sigma_{\bar{Y_A}}^2 & \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \\
+\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \sigma_{\bar{Y_B}}^2 &
+\end{bmatrix}
+\left(\begin{array}{c}
+\frac{\partial g}{\partial \bar{Y_A}}\\
+\frac{\partial g}{\partial \bar{Y_B}}\\
+\end{array}
+\right)
+\]
+
+\[\Rightarrow S^2 = (\frac{\partial g}{\partial \bar{Y_A}})[(\frac{\partial g}{\partial \bar{Y_A}})(\bar{Y_A}^2)+(\frac{\partial g}{\partial \bar{Y_B}})(\bar{Y_B}^2)] + (\frac{\partial g}{\partial \bar{Y_B}})[(\frac{\partial g}{\partial \bar{Y_A}})(\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}})+(\frac{\partial g}{\partial \bar{Y_B}})(\sigma_{\bar{Y_B}}^2)] \]
+
+\[\Rightarrow S^2 = \frac{1}{4131.33}[(\frac{1}{4131.33})((2669.21)^2)+(\frac{-3005.75}{4131.33})(1317417.75)]\] \[+\frac{-3005.75}{4131.33}[(\frac{1}{4131.33})(1317417.75)+(\frac{-3005.75}{4131.33})((2054.20)^2)] \]
+
+\[\Rightarrow S = 1494.38\]
+
+\textit{Subproblem B}
+
+\bigskip Let's rename $g$ to be $\eta$. Now we know that
+
+\[\hat{\eta} \sim N(\eta,S) \]
+
+So by the rules of variance,
+
+\[\frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},\frac{S}{(.25)^2}) \]
+
+\[\Rightarrow \frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},\frac{1494.38}{(.25)^2})\]
+
+\[\Rightarrow \frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},23910.08)\]
+
+The experiment's realization of $\hat{\eta}$ is
+
+\[\hat{\eta}=\frac{\bar{Y_A}-\bar{Y_B}}{\bar{Y_B}}=\frac{4131.33-3005.75}{3005.75}=.37\]
+
+Hence producing a 95\% confidence interval for $\frac{\hat{\eta}}{.25}$ is straightforward.
+
+\[\frac{\eta}{.25} \in \left[\frac{.37}{.25}\pm1.96(23910.08)\right] \]
+
+\[\Rightarrow \frac{\eta}{.25} \in \left[-46862.28,46865.24\right]\]
+
+This is a huge confidence interval!
+
+\bigskip This paper published well (in the \textit{AER}) because it was the first to use an RCT to produce clean estimates for a number of labor supply elasticities. But we think the point of this problem is to show that, perhaps because of the small sample size, the appropriate standard error for the revenue/wage elasticity should leave you with little confidence in that particular result.
+
 \subsection*{2. Logit MLE}
 
 \begin{enumerate}[a)]
