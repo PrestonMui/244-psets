@@ -220,8 +220,7 @@ The SE are fairly similar in columns 1 and 2 for parts a) and b) though they are
 
 	\item Here we have that the regression with non-clustered standard errors rejects the test that the coefficient equals the average of the cluster level $\eta$'s 3\% of the time and the clustered standard errors are never rejecting, so in this case clustering is causing us not reject often enough. \\
 		\input{ps2_4e_regs.tex}
-
-	\item TBD
+	\item When treatment is at the cluster level like in the case of the set up for part d then clustering standard errors will produce the accurate standard errors. However, in e, when the treatment is at the individual level but those individuals are within a cluster, for example a school or village then clustering the errors will actually cause our standard errors to be larger than we would want, leading to us to not reject enough. For the purpose of the internal validity of the study, using non-clustered standard errors when treatment is at the individual level is appropriate. 
 \end{enumerate}
 
 
@@ -257,9 +256,10 @@ The SE are fairly similar in columns 1 and 2 for parts a) and b) though they are
 			\end{center}
 		\end{figure}
 
-	\item TBD
+	\item A simple model which passes the chi-squared test is just lnwage on sex. We cannot reject that this model explains all of the variation in lnwage up to a sampling error.
 \end{enumerate}
 
+\newpage
 \subsection*{6. Random Coefficient Binary Choice Model:}
 \begin{enumerate}[a)]
 	\item As was derived in the lecture notes, the simulated log likelihood can be derived as follows. Denote the Logistic cdf with $\Lambda$ and its pdf with $\lambda$.
