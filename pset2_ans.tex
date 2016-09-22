@@ -157,8 +157,9 @@ This is a huge confidence interval!
 	\item The moment condition identifying $\beta_{ML}$ is
 	\begin{align*}
 		E \bigg[ \Big( Y_i - \frac{\exp(X_i'\beta)}{1 + \exp(X_i'\beta)}\Big) X_i' \bigg] &= 0 \\
-		E \bigg[ E[Y_i - \frac{\exp(X_i'\beta)}{1 + \exp(X_i'\beta)} | X_i] X_i' \bigg] &= 0
+		E \bigg[ E[Y_i - \frac{\exp(X_i'\beta)}{1 + \exp(X_i'\beta)}| X_i] X_i' \bigg] &= 0
 	\end{align*}
+	the interpretation here is that the ``residual'', that is, $E[Y_i] - \Lambda(X_i'\beta)$, is uncorrelated with $X_i$. $\Lambda(X_i'\beta)$ can be thought of as the ``predicted value'' for $Y_i$, since $P(Y_i = 1 | X_i) = \Lambda(X_i'\beta)$.
 	
 	\item The moment conditions identifying $\beta_{NLLS}$ are
 	\begin{align*}
@@ -166,7 +167,7 @@ This is a huge confidence interval!
 		&= E \bigg[ E[(Y - \Lambda(X_i'\beta)) | X_i] \frac{\exp(X_i'\beta)}{(1 + \exp(X_i'\beta))^2} X_i' \bigg] \\
 	\end{align*}
 
-	\item Under which conditions does $\beta_{NLLS}$ coincide with $\beta_{ML}$? The moment conditions will coincide when $E[Y_i - \Lambda(X_i'\beta) | X_i'] = 0$ for all $X_i$; that is, they coincide when the logit model is correctly specified.
+	\item Under which conditions does $\beta_{NLLS}$ coincide with $\beta_{ML}$? The moment conditions will coincide when $E[Y_i - \Lambda(X_i'\beta) | X_i'] = 0$ for all $X_i$; that is, they coincide when the logit model is correctly specified, and $\Lambda(X_i'\beta)$ is the actual conditional expectation function of $Y_i$ given $X_i$.
 
 \end{enumerate}
 
