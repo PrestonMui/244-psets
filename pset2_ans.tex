@@ -19,11 +19,11 @@
 }
 \end{center}
 
-\subsection*{1. Problem 1}
+\bigskip \textbf{1. Standard Errors for Composite Statistics}
 
 \bigskip \textit{Subproblem A}
 
-\bigskip The Delta Method (or the So Called ``Delta Method," so called by Dr. James Powell) says that, if we have a random vector $\theta$ that is asymptotically normal with
+\bigskip The Delta Method (or the So-Called ``Delta Method," so called by Dr. James Powell) says that, if we have a random vector $\theta$ that is asymptotically normal with
 
 \[\sqrt{N}(\hat{\theta}-\theta_0) \overset{d}{\to} N(0,\Sigma)\]
 
@@ -49,15 +49,17 @@ that
 
 \[\Sigma=
 \begin{bmatrix}
-\sigma_{\bar{Y_A}}^2 & \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \\
-\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \sigma_{\bar{Y_B}}^2 &
+\hat{\sigma}_{\bar{Y_A}}^2 & \hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}} & \\
+\hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}} & \hat{\sigma}_{\bar{Y_B}}^2 &
 \end{bmatrix}\]
 
 and that
 
 \[g(\theta)=\frac{\bar{Y_A}-\bar{Y_B}}{\bar{Y_B}}\]
 
-We can find these values in the reprinted table. $\bar{Y_A}=4131.33$, $\bar{Y_B}=3005.75$, $\sigma_{\bar{Y_A}}^2=(2669.21)^2$, and $\sigma_{\bar{Y_B}}^2=(2054.20)^2$. But we still have to do a little bit of work.
+%(Our variance-covariance matrix is $\frac{\Sigma}{n}$ because the table reports standard errors that already account for the sample size.)
+
+\bigskip We can find many of these values in the reprinted table. $\bar{Y_A}=4131.33$, $\bar{Y_B}=3005.75$, $\hat{\sigma}_{\bar{Y_A}}^2=(2669.21)^2$, and $\hat{\sigma}_{\bar{Y_B}}^2=(2054.20)^2$. But we still have to do a little bit of work.
 
 \bigskip Differentiating $g$ with respect to each of its arguments and evaluating them at $\theta_0$ yields $G$.
 
@@ -65,35 +67,35 @@ We can find these values in the reprinted table. $\bar{Y_A}=4131.33$, $\bar{Y_B}
 \left(
 \begin{array}{c}
 \frac{\partial g}{\partial \bar{Y_A}} = \frac{1}{\bar{Y_B}}\\
-\frac{\partial g}{\partial \bar{Y_B}} = \frac{-\bar{Y_A}}{Y_B}\\
+\frac{\partial g}{\partial \bar{Y_B}} = \frac{-\bar{Y_A}}{Y_B^2}\\
 \end{array}
 \right)
 \Rightarrow 
 G_0 =
 \left(
 \begin{array}{c}
-\frac{\partial g(\theta_0)}{\partial \bar{Y_A}}=\frac{1}{4131.33}\\
-\frac{\partial g(\theta_0)}{\partial \bar{Y_B}}=\frac{-3005.75}{4131.33}\\
+\frac{\partial g(\theta_0)}{\partial \bar{Y_A}}=\frac{1}{3005.75}\\
+\frac{\partial g(\theta_0)}{\partial \bar{Y_B}}=\frac{-4131.33}{9034533.06}\\
 \end{array}
 \right)
 \]
 
-The table also gives us $\sigma_{\bar{Y_A}-\bar{Y_B}}$, which combined with a simple variance identity, will gives us $\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}}$.
+The table also gives us the standard error $\frac{\hat{\sigma}_{\bar{Y_A}-\bar{Y_B}}}{\sqrt{n}}$, which unlike the sample standard deviations, already accounts for the sample size. Combined with a simple variance identity, it can give us $\hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}}$.
 
-\[VAR(\bar{Y_A}-\bar{Y_B})=VAR(\bar{Y_A})-VAR(\bar{Y_B})-2COV(\bar{Y_A},\bar{Y_B})\]
+\[VAR(\bar{Y_A}-\bar{Y_B})=VAR(\bar{Y_A})+VAR(\bar{Y_B})-2COV(\bar{Y_A},\bar{Y_B})\]
 
-\[\Rightarrow COV(\bar{Y_A},\bar{Y_B})=\frac{VAR(\bar{Y_A})-VAR(\bar{Y_B})-VAR(\bar{Y_A}-\bar{Y_B})}{2}\]
+\[\Rightarrow COV(\bar{Y_A},\bar{Y_B})=\frac{VAR(\bar{Y_A})+VAR(\bar{Y_B})-VAR(\bar{Y_A}-\bar{Y_B})}{2}\]
 
-\[\Rightarrow \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}}=\frac{(2669.21)^2-(2054.20)^2-(519.72)^2}{2}\]
+\[\Rightarrow \hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}}=\frac{(2669.21)^2+(2054.20)^2-(42)(519.72)^2}{2}\]
 
-\[\Rightarrow \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}}=1317417.75\]
+\[\Rightarrow \hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}}=-76.67\]
 
 Now we can set up the matrix algebra to use the Delta Method to compute an \textit{estimate} of the standard error, S.
 
-\[S^2 = G_0' \Sigma G_0 = \begin{matrix}\begin{pmatrix}\frac{\partial g}{\partial \bar{Y_A}} & \frac{\partial g}{\partial \bar{Y_B}}\end{pmatrix}\\\mbox{}\end{matrix}
+\[S^2 = \frac{1}{n}G_0' \Sigma G_0 = \frac{1}{n}\begin{matrix}\begin{pmatrix}\frac{\partial g}{\partial \bar{Y_A}} & \frac{\partial g}{\partial \bar{Y_B}}\end{pmatrix}\\\mbox{}\end{matrix}
 \begin{bmatrix}
-\sigma_{\bar{Y_A}}^2 & \sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \\
-\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}} & \sigma_{\bar{Y_B}}^2 &
+\hat{\sigma}_{\bar{Y_A}}^2 & \hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}} & \\
+\hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}} & \hat{\sigma}_{\bar{Y_B}}^2 &
 \end{bmatrix}
 \left(\begin{array}{c}
 \frac{\partial g}{\partial \bar{Y_A}}\\
@@ -102,25 +104,25 @@ Now we can set up the matrix algebra to use the Delta Method to compute an \text
 \right)
 \]
 
-\[\Rightarrow S^2 = (\frac{\partial g}{\partial \bar{Y_A}})[(\frac{\partial g}{\partial \bar{Y_A}})(\bar{Y_A}^2)+(\frac{\partial g}{\partial \bar{Y_B}})(\bar{Y_B}^2)] + (\frac{\partial g}{\partial \bar{Y_B}})[(\frac{\partial g}{\partial \bar{Y_A}})(\sigma_{\bar{Y_A}}\sigma_{\bar{Y_B}})+(\frac{\partial g}{\partial \bar{Y_B}})(\sigma_{\bar{Y_B}}^2)] \]
+\[\Rightarrow S^2 = \frac{1}{n}[(\frac{\partial g}{\partial \bar{Y_A}})[(\frac{\partial g}{\partial \bar{Y_A}})(\hat{\sigma}_{\bar{Y_A}}^2)+(\frac{\partial g}{\partial \bar{Y_B}})(\hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}})] + (\frac{\partial g}{\partial \bar{Y_B}})[(\frac{\partial g}{\partial \bar{Y_A}})(\hat{\sigma}_{\bar{Y_A}}\hat{\sigma}_{\bar{Y_B}})+(\frac{\partial g}{\partial \bar{Y_B}})(\hat{\sigma}_{\bar{Y_B}}^2)]] \]
 
-\[\Rightarrow S^2 = \frac{1}{4131.33}[(\frac{1}{4131.33})((2669.21)^2)+(\frac{-3005.75}{4131.33})(1317417.75)]\] \[+\frac{-3005.75}{4131.33}[(\frac{1}{4131.33})(1317417.75)+(\frac{-3005.75}{4131.33})((2054.20)^2)] \]
+\[\Rightarrow S^2 = \frac{1}{42}[\frac{1}{3005.75}[(\frac{1}{3005.75})((2669.21)^2)+(\frac{-4131.33}{9034533.06})(-76.67)]\] \[+\frac{-4131.33}{9034533.06}[(\frac{1}{3005.75})(-76.67)+(\frac{-4131.33}{9034533.06})((2054.20)^2)]] \]
 
-\[\Rightarrow S = 1494.38\]
+\[\Rightarrow S = .20\]
 
 \textit{Subproblem B}
 
 \bigskip Let's rename $g$ to be $\eta$. Now we know that
 
-\[\hat{\eta} \sim N(\eta,S) \]
+\[\hat{\eta} \sim N(\eta,S^2) \]
 
 So by the rules of variance,
 
-\[\frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},\frac{S}{(.25)^2}) \]
+\[\frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},\frac{S^2}{(.25)^2}) \]
 
-\[\Rightarrow \frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},\frac{1494.38}{(.25)^2})\]
+\[\Rightarrow \frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},\frac{(.20)^2}{(.25)^2})\]
 
-\[\Rightarrow \frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},23910.08)\]
+\[\Rightarrow \frac{\hat{\eta}}{.25} \sim N(\frac{\eta}{.25},.64)\]
 
 The experiment's realization of $\hat{\eta}$ is
 
@@ -128,13 +130,9 @@ The experiment's realization of $\hat{\eta}$ is
 
 Hence producing a 95\% confidence interval for $\frac{\hat{\eta}}{.25}$ is straightforward.
 
-\[\frac{\eta}{.25} \in \left[\frac{.37}{.25}\pm1.96(23910.08)\right] \]
+\[\frac{\eta}{.25} \in \left[\frac{.37}{.25}\pm1.96(\sqrt{.64})\right] \]
 
-\[\Rightarrow \frac{\eta}{.25} \in \left[-46862.28,46865.24\right]\]
-
-This is a huge confidence interval!
-
-\bigskip This paper published well (in the \textit{AER}) because it was the first to use an RCT to produce clean estimates for a number of labor supply elasticities. But we think the point of this problem is to show that, perhaps because of the small sample size, the appropriate standard error for the revenue/wage elasticity should leave you with little confidence in that particular result.
+\[\Rightarrow \frac{\eta}{.25} \in \left[.23,2.37\right]\]
 
 \subsection*{2. Logit MLE}
 
@@ -170,7 +168,7 @@ This is a huge confidence interval!
 	\item Under which conditions does $\beta_{NLLS}$ coincide with $\beta_{ML}$? The moment conditions will coincide when $E[Y_i - \Lambda(X_i'\beta) | X_i'] = 0$ for all $X_i$; that is, they coincide when the logit model is correctly specified, and $\Lambda(X_i'\beta)$ is the actual conditional expectation function of $Y_i$ given $X_i$.
 
 	\item
-	Under proper specification of the model, the asymptotic variance of the estimator is the additive inverse of the inverse of expectation of the Hessian of the log likelihood.\footnote{I just wanted to write that all out.} As was derived in part a), the score (i.e. the gradient of the log-likelihood) is
+	Under proper specification of the model, the asymptotic variance of the estimator is the additive inverse of the inverse of the expectation of the Hessian of the log likelihood.\footnote{I just wanted to write that all out.} As was derived in part a), the score (i.e. the gradient of the log-likelihood) is
 	$$s(X_i,\beta) = \left(Y_i - \frac{\exp(X_i' \beta)}{1 + \exp(X_i'\beta)}\right)X_i'$$
 	Thus, the Hessian matrix is 
 	\begin{align*}
@@ -326,7 +324,7 @@ The SE are fairly similar in columns 1 and 2 for parts a) and b) though they are
 	\item Let $\hat \theta_{MSL}$ denote the estimated parameters from the method of simulated likelihood and the true parameters $\theta = [\mu, \sigma]'$. Under proper specification, we know that
 	$$\sqrt{N}(\hat \theta_{MSL} - \theta) \to 
 	\mathcal{N}(\mathbf{0},\mathbf{H}(\theta)^{-1})$$
-	By the delta-method, with $g(\theta) \equiv [\mu ln(\sigma)]'$, we have that
+	By the delta-method, with $g(\theta) \equiv [\mu, ln(\sigma)]'$, we have that
 	$$\sqrt{N}(g(\hat \theta_{MSL}) - g(\theta)) \to 
 	\mathcal{N}(\mathbf{0},\mathbf{G}\mathbf{H}(\theta)^{-1}\mathbf{G})$$
 	where $$\mathbf{G} \equiv \frac{\partial g(\theta)}{\partial \theta} = \begin{bmatrix}1 & 0 \\ 0 & \frac{1}{\sigma}\end{bmatrix}$$
