@@ -16,7 +16,7 @@ load('logit.mat');
 [N,~] = size(data);
 
 %------------------------------------------------------------------------------
-% Unconstrained maximization using fminco
+% Unconstrained maximization using fminunc
 %------------------------------------------------------------------------------
 % Specify starting guess of optimal mu and ln_sigma
 x0 = [1,1];
@@ -29,7 +29,7 @@ mu_val_est = x_min(1)
 ln_sig_est = x_min(2)
 
 % Problem 6e, standard errors under correct specification
-G = [1,0;0,(1/x_min(2))];
+G = [1,0;0,1];
 correct_specification_se = sqrt(diag((1/N)*G*inv(x_hessian)*G))
 
 % Problem 6f, standard errors under incorrect specification
