@@ -145,7 +145,7 @@ This is a huge confidence interval!
 	\begin{align*}
 		\frac{\partial \Lambda(X_i'\beta)}{\partial \beta} &= \frac{\exp(X_i' \beta)X_i'(1 + X_i'\beta) - \exp(X_i'\beta) \exp(X_i'\beta) X_i'}{(1+\exp(X_i'\beta))^2} = \frac{\exp(X_i'\beta)X_i'}{(1 + \exp(X_i'\beta))^2}
 	\end{align*}
-	The score of the logit log-likelihood is therefore
+	The sum of the individual score of the logit log-likelihood is therefore
 	\begin{align*}
 		s(\beta) &= \sum_i \frac{Y_i \exp(X_i'\beta)X_i' }{\Lambda(X_i'\beta)(1 + \exp(X_i'\beta))^2} -
 			\frac{(1 - Y_i)\exp(X_i'\beta)X_i'}{(1 - \Lambda(X_i'\beta))(1 + \exp(X_i'\beta))^2} \\
@@ -169,6 +169,31 @@ This is a huge confidence interval!
 
 	\item Under which conditions does $\beta_{NLLS}$ coincide with $\beta_{ML}$? The moment conditions will coincide when $E[Y_i - \Lambda(X_i'\beta) | X_i'] = 0$ for all $X_i$; that is, they coincide when the logit model is correctly specified, and $\Lambda(X_i'\beta)$ is the actual conditional expectation function of $Y_i$ given $X_i$.
 
+	\item
+	Under proper specification of the model, the asymptotic variance of the estimator is the additive inverse of the inverse of expectation of the Hessian of the log likelihood.\footnote{I just wanted to write that all out.} As was derived in part a), the score (i.e. the gradient of the log-likelihood) is
+	$$s(X_i,\beta) = \left(Y_i - \frac{\exp(X_i' \beta)}{1 + \exp(X_i'\beta)}\right)X_i'$$
+	Thus, the Hessian matrix is 
+	\begin{align*}
+	\nabla_\beta s(X_i,\beta) & = -\frac{\exp(X_i'\beta)(1+\exp(X_i'\beta)) - \exp(X_i'\beta)^2}{(1+\exp(X_i'\beta))^2}X_i X_i' \\
+	& = -\frac{\exp(X_i'\beta)}{(1+ \exp(X_i'\beta))^2}X_iX_i'
+	\end{align*}
+	And so, the asymptotic variance of $\beta_{ML}$ under correct specification is given by
+	$$\sqrt{N}(\beta_{ML} - \beta) \overset{d}{\to} \mathcal{N}(0,H(\beta)^{-1})$$
+	with
+	$$H(\beta) = E\left[\frac{\exp(X_i'\beta)}{(1+ \exp(X_i'\beta))^2}X_iX_i'\right]$$
+
+	\item Let $V_s = E\left[s(X_i,\beta)s(X_i,\beta)'\right]$, the outer product of the score. Under mispecification, the asymptotic variance of $\beta_{ML}$ is as follows:
+	$$\sqrt{N}(\beta_{ML} - \beta) \overset{d}{\to} \mathcal{N}\left(0,H(\beta)^{-1}V_{s}H(\beta)^{-1}\right)$$
+	with $H(\beta)$ defined as in the previous problem and 
+	$$V_s = E\left[\left(Y_i - \frac{\exp(X_i'\beta)}{1+\exp(X_i'\beta)}\right)^2X_i X_i'\right]$$
+
+	\item Suppose the data are independent across but not necessarily within clusters. Propose a cluster robust estimator of the asymptotic variance of $\beta_{ML}$
+
+	One idea is to construct a similar estimator to the one we have for cluster robust standard errors for OLS:
+	$$\frac{J}{J-K}\frac{1}{N}\left(\frac{1}{N}\sum_{i=1}^N \frac{\exp(X_i'\beta)}{(1+\exp(X_i'\beta))^2}X_i' X_i \right)^{-1} 
+	\left(\frac{1}{N} \sum_{j=1}^{J}X_j u_j u_j' X_j'\right)\left(\frac{1}{N}\sum_{i=1}^N \frac{\exp(X_i'\beta)}{(1+\exp(X_i'\beta))^2}X_i' X_i \right)^{-1} $$
+	where $$u_j = \left[\left(Y_s - \frac{\exp(X_s'\beta)}{(1+\exp(X_s'\beta))^2}\right)\right]_{s \in j}.$$
+	That is, $u_j$ is the vector of ``residuals'' for observations $s$ in cluster $j$.
 \end{enumerate}
 
 
