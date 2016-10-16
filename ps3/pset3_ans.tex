@@ -25,6 +25,33 @@
 
 \bigskip \textbf{2SLS}
 
+\begin{enumerate}[(a)]
+
+	\item The moment conditions defining the 2SLS estimator are
+	\begin{align*}
+		E \left[ Z_i \epsilon_i \right] &= 0 \\
+		E \left[ Z_i^2 \epsilon_i \right] &= 0
+	\end{align*}
+	they imply each other, since functions of uncorrelated variables are uncorrelated with each other.
+
+	\item The moment conditions defining the control function estimator are
+	\begin{align*}
+		E \left[ Z_i \epsilon_i \right] &= 0 \\
+		E \left[ Z_i v_i \right] &= 0 \\
+		E \left[ \epsilon_i | v_i \right] &= \rho \frac{\sigma_{\epsilon}}{\sigma_v} v_i \\
+		E \left[ (Y_i - \beta_0 - \beta_1 X_i - \beta_2 X_i^2 - \rho \frac{\sigma_{\epsilon}}{\sigma_v} v_i)X_i \right] &= 0 \\
+		E \left[ (Y_i - \beta_0 - \beta_1 X_i - \beta_2 X_i^2 - \rho \frac{\sigma_{\epsilon}}{\sigma_v} v_i)X_i^2 \right] &= 0 \\
+		E \left[ (Y_i - \beta_0 - \beta_1 X_i - \beta_2 X_i^2 - \rho \frac{\sigma_{\epsilon}}{\sigma_v} v_i)v_i \right] &= 0
+	\end{align*}
+
+	\item The control function estimator relies on stronger conditions than the 2SLS estimator. The only condition in the 2SLS estimator is that the instrument, $Z$, is uncorrelated with the error term $\epsilon$. However, the control function estimator relies on specifying the exogenous relationship between $X$ and $Z$, in particular that the conditional expection of $X$ given $Z$ is linear.
+
+	\item The control function would work better when $Z$ is weak, because it brings to bear more moment restrictions than the 2SLS estimator, whereas the 2SLS estimator only relies on the exogeneity of $Z$. %Should add more but not sure what
+
+	\item
+
+\end{enumerate}
+
 \bigskip \textbf{Bootstrap OLS}
 
 \bigskip \textbf{Bootstrap Probit}
