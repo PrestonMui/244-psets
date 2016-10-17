@@ -23,6 +23,29 @@
 
 \bigskip \textbf{Matching}
 
+\begin{enumerate}[(a)]
+
+	\item To run OLS on $Y_{i2} - Y_{i1} = \gamma_2 - \gamma_1 + \beta D_{i2} + \epsilon_{i2} - \epsilon_{i1}$, the identifying restriction is that $E\left[D_{i2} (\epsilon_{i2} - \epsilon_{i1})\right] = 0$; that is, program participation is uncorrelated with the change in error terms $\epsilon_{i2} - \epsilon_{i1}$.
+
+	\item $Y_{i2} = Y_{i1} + (\gamma_2 - \gamma_1) + \beta D_{i2} + \epsilon_{i2} - \epsilon_{i1}$
+
+	\item Taking expectations,
+	\begin{align*}
+		E\left[Y_{i2} | Y_{i1}, D_{i2} = 1\right] &= Y_{i1} + (\gamma_2 - \gamma_1) + \beta + E[\epsilon_{i2} - \epsilon_{i1} | Y_{i1}, D_{i1}=1]\\
+		E\left[Y_{i2} | Y_{i1}, D_{i2} = 0\right] &= Y_{i1} + (\gamma_2 - \gamma_1) + E[\epsilon_{i2} - \epsilon_{i1} | Y_{i1}, D_{i1}=0]
+	\end{align*}
+	the difference of these two identifies $\beta$ if
+	\begin{align*}
+		E[\epsilon_{i2} - \epsilon_{i1} | Y_{i1}, D_{i2}=1] - E[\epsilon_{i2} - \epsilon_{i1} | Y_{i1}, D_{i2}=0] &= 0 \\
+		E \bigg[ E[\epsilon_{i2} - \epsilon_{i1} | D_{i2}=1] - E[\epsilon_{i2} - \epsilon_{i1} | D_{i2}=0] \bigg| Y_{i1} \bigg]&= 0 \\
+		E \bigg[ D_{i2} (\epsilon_{i2} - \epsilon_{i1}) \bigg| Y_{i1} \bigg]&= 0 \\
+	\end{align*}
+	
+	\item This assumption is a bit stricter than that of the assumption in part (a); it is the same restriction in part (a), but conditional on $Y_{i1}$.
+
+\end{enumerate}
+
+
 \bigskip \textbf{2SLS}
 
 \begin{enumerate}[(a)]
