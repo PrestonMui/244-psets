@@ -50,6 +50,30 @@
 
 	\item
 
+	The table below contains the estimates for $\beta_1$ and $\beta_2$ under the 2SLS and control function methods.
+
+	\begin{enumerate}[(i)]
+	 
+		\item Overall, for all values of $\gamma$, the control function estimate appears to be more efficient (the spread of the estimates is much lower), because the control function's ``first-stage'' is correctly specified, and the estimation involves more moment restrictions.
+		
+		\item As $\gamma_1$ shrinks, the mean 2sls estimate falls (away from the true value of $1.0$), although the median appears to remain unbiased. The interquartile range of both estimators increases, although the IQR for the 2sls estimate increases much faster than that of the control function. The control function estimates appear to remain both median and mean-unbiased.
+
+		\item If one wanted to test the hypothesis that $\rho \frac{\sigma_{\epsilon}}{\sigma_{v}} = 0$, one would need an additional term in the variance of the coefficient on $v_i$. In particular, by using the two-stage estimate formulas for the asymptotic variance of the estimate of $\rho \frac{\sigma_{\epsilon}}{\sigma_{v}}$, one would see that in the ``sandwich'' estimator, one would replace the term
+		\begin{align*}
+			E[s_i(\theta_0, \gamma^*)s_i(\theta_0, \gamma^*)']
+		\end{align*}
+		where $\theta_0 = (\beta_0, \beta_1, \beta_2, \rho \frac{\sigma_{\epsilon}}{\sigma_{v}})$ and $\gamma^* = (\gamma_0, \gamma_1)$, and $s_i$ being the score function (gradient of the squared residual with respect to $\theta_0$), with this term
+		\begin{align*}
+			& E[g_i(\theta_0, \gamma^*)g_i(\theta_0, \gamma^*)'] \\
+			\mbox{s. t. } g_i(\theta_0, \gamma^*) &\equiv s_i(\theta_0, \gamma^*) + E \left[ \nabla_\gamma s_i(\theta_0, \gamma^*) \right]  r_i (\theta_0, \gamma^*)
+		\end{align*}
+		where $r_i$ is the asymptotic variance of $\sqrt{N}(\hat{\gamma} - \gamma^*)$ and can be obtained from the ``first-stage'' regression. To construct an estimate of the standard error, one can simply plug in the population analogues into this sandwich estimator and run a t-test with the modified standard error.
+
+	\end{enumerate}
+
+	\centering
+	\input{pset3_q3_table}
+
 \end{enumerate}
 
 \bigskip \textbf{Bootstrap OLS}
