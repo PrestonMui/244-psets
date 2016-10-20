@@ -42,7 +42,14 @@
 		E \bigg[ D_{i2} (\epsilon_{i2} - \epsilon_{i1}) \bigg| Y_{i1} \bigg]&= 0 \\
 	\end{align*}
 	
-	\item This assumption is a bit stricter than that of the assumption in part (a); it is the same restriction in part (a), but conditional on $Y_{i1}$.
+	\item This assumption is stricter than that of the assumption in part (a); it is the same restriction in part (a), but conditional on $Y_{i1}$.
+
+	\item The Smith and Todd (2005) matched differences-in-differences estimator requires that selection is independent on the differences in untreated outcomes between time periods, conditional on the propensity. Formally,
+	\begin{align*}
+		E \bigg[ D_{i2} (\gamma_2 + \epsilon_{i2} - \gamma_1 - \epsilon_{i1} ) \bigg| P_{i} \bigg] &= E[D_{i2}] E \bigg[  (\gamma_2 + \epsilon_{i2} - \gamma_1 - \epsilon_{i1} ) \bigg| P_{i} \bigg] \\
+		\implies E \bigg[ D_{i2} (\epsilon_{i2} - \epsilon_{i1} ) \bigg| P_{i} \bigg] &= 0
+	\end{align*}
+	which is the same condition from above, except instead of conditioning on $Y_{i1}$ we are conditioning on $P_i$, the conditions are not really ``weaker'' than the ones above.
 
 \end{enumerate}
 
