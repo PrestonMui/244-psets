@@ -1,0 +1,410 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\samle\Google Drive\Coursework\Kline\Problem Sets\PS3\PS3P1.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}20 Oct 2016, 18:00:00
+{txt}
+{com}. 
+. *Subproblem B
+. 
+. *Generate a new variable that is the log of the existing wage variable.
+. generate lnhr_wage = log(hr_wage)
+{txt}(52689 missing values generated)
+
+{com}. *Restrict attention to the cleaned sample.
+. keep if hr_wage_sample==1
+{txt}(119799 observations deleted)
+
+{com}. *Plot kernel density estimates of the log wage variable.
+. *drop if age<18
+. 
+. *Old code (save it, just in case):
+. *kdensity lnhr_wage [aweight=wgt_hrs] if new==0
+. *kdensity lnhr_wage [aweight=wgt_hrs] if new==1
+. *kdensity lnhr_wage [aweight=wgt_hrs] if new==0 & inrange(age,25,50) & black==1 & female==0
+. *kdensity lnhr_wage [aweight=wgt_hrs] if new==1 & inrange(age,25,50) & black==1 & female==0
+. *kdensity lnhr_wage [aweight=wgt_hrs] if new==0 & inrange(age,25,50) & black==0 & female==1
+. *kdensity lnhr_wage [aweight=wgt_hrs] if new==1 & inrange(age,25,50) & black==0 & female==1
+. 
+. /*
+> 
+> kdensity lnhr_wage [aweight=wgt_hrs], nograph generate(xa fxa)
+> kdensity lnhr_wage [aweight=wgt_hrs] if new==0, nograph generate(fxa0) at(xa)
+> kdensity lnhr_wage [aweight=wgt_hrs] if new==1, nograph generate(fxa1) at(xa)
+> label var fxa0 "1979"
+> label var fxa1 "1997"
+> line fxa0 fxa1 xa, sort ytitle(Kernel Density)
+> graph export "Kernel_Density_Full.pdf", replace
+> 
+> *Subproblem D
+> 
+> *Plot kernel density estimates of the log wage variable for subpopulations.
+> *Black men 25-50
+> kdensity lnhr_wage [aweight=wgt_hrs], nograph generate(xb fxb)
+> kdensity lnhr_wage [aweight=wgt_hrs] if new==0 & inrange(age,25,50) & black==1 & female==0, nograph generate(fxb0) at(xb)
+> kdensity lnhr_wage [aweight=wgt_hrs] if new==1 & inrange(age,25,50) & black==1 & female==0, nograph generate(fxb1) at(xb)
+> label var fxb0 "1979"
+> label var fxb1 "1997"
+> line fxb0 fxb1 xb, sort ytitle(Kernel Density)
+> graph export "Kernel_Density_Black_Men.pdf", replace
+> *White women 25-50
+> kdensity lnhr_wage [aweight=wgt_hrs], nograph generate(xc fxc)
+> kdensity lnhr_wage [aweight=wgt_hrs] if new==0 & inrange(age,25,50) & black==0 & female==1, nograph generate(fxc0) at(xc)
+> kdensity lnhr_wage [aweight=wgt_hrs] if new==1 & inrange(age,25,50) & black==0 & female==1, nograph generate(fxc1) at(xc)
+> label var fxc0 "1979"
+> label var fxc1 "1997"
+> line fxc0 fxc1 xc, sort ytitle(Kernel Density)
+> graph export "Kernel_Density_White_Women.pdf", replace
+> 
+> */
+. 
+. *Subproblems E,F,G
+. *I thank Christopher Campos for help with the next section of code.
+. 
+. *Generate a variable for age squared.
+. generate age2 = age*age
+{txt}
+{com}. *Find the propensity score with a logit.
+. *Use iweights since Stata 13 does not allow aweights for logit.
+. logit new female black other age age2 [iweight=wgt_hrs]
+
+{res}{txt}Iteration 0:{space 3}log likelihood = {res:-3.917e+09}  
+Iteration 1:{space 3}log likelihood = {res:-3.838e+09}  
+Iteration 2:{space 3}log likelihood = {res:-3.838e+09}  
+Iteration 3:{space 3}log likelihood = {res:-3.838e+09}  
+{res}
+{txt}Logistic regression{col 51}Number of obs{col 67}= {res}    262810
+{txt}{col 51}LR chi2({res}5{txt}){col 67}= {res}  1.58e+08
+{txt}{col 51}Prob > chi2{col 67}= {res}    0.0000
+{txt}Log likelihood = {res}-3.838e+09{txt}{col 51}Pseudo R2{col 67}= {res}    0.0202
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         new{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}female {c |}{col 14}{res}{space 2} .1492362{col 26}{space 2} .0000548{col 37}{space 1} 2721.29{col 46}{space 3}0.000{col 54}{space 4} .1491287{col 67}{space 3} .1493437
+{txt}{space 7}black {c |}{col 14}{res}{space 2} .0454649{col 26}{space 2} .0000911{col 37}{space 1}  499.20{col 46}{space 3}0.000{col 54}{space 4} .0452864{col 67}{space 3} .0456434
+{txt}{space 7}other {c |}{col 14}{res}{space 2} .6023735{col 26}{space 2} .0001582{col 37}{space 1} 3806.92{col 46}{space 3}0.000{col 54}{space 4} .6020634{col 67}{space 3} .6026836
+{txt}{space 9}age {c |}{col 14}{res}{space 2} .1525443{col 26}{space 2} .0000147{col 37}{space 1} 1.0e+04{col 46}{space 3}0.000{col 54}{space 4} .1525154{col 67}{space 3} .1525731
+{txt}{space 8}age2 {c |}{col 14}{res}{space 2}-.0017885{col 26}{space 2} 1.89e-07{col 37}{space 1}-9485.08{col 46}{space 3}0.000{col 54}{space 4}-.0017888{col 67}{space 3}-.0017881
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-2.812323{col 26}{space 2} .0002693{col 37}{space 1}-1.0e+04{col 46}{space 3}0.000{col 54}{space 4}-2.812851{col 67}{space 3}-2.811796
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. predict new_hat, pr
+{txt}
+{com}. *Take the predicted value from this logit - i.e. the propensity score.
+. *Use it to reweight the 1997 wage distribution to have the 1979 demographic composition.
+. egen mean1997 = mean(new)
+{txt}
+{com}. gen psi1997 = [(1-new_hat)/new_hat]*[mean1997/(1-mean1997)]*wgt_hrs
+{txt}
+{com}. gen psi1979 = [new_hat/(1-new_hat)]*[(1-mean1997)/mean1997]*wgt_hrs
+{txt}
+{com}. 
+. *Plots:
+. 
+. 
+. 
+. *1997 vs. 1997 using 1979 weights
+. *keep demographics constant as move forward in time
+. twoway (kdensity lnhr_wage if new==0) ///
+> (kdensity lnhr_wage if new==1) ///
+> (kdensity lnhr_wage if new==1 [aweight=psi1979] ), ///
+> legend(label(1 "Actual 1979") label(2 "Actual 1997") label(3 "Counterfactual 1997") ///
+> rows(2)) ytitle("Kernel Density") ///
+> title("Actual 1979 vs. Actual 1997 vs. Counterfactual 1997")
+{res}{txt}
+{com}. graph export Kernel_Density_1997_C1997.png, replace
+{txt}(file Kernel_Density_1997_C1997.png written in PNG format)
+
+{com}. 
+. *1979 vs. 1979 using 1997 weights
+. *keep demographics constant as move backward in time
+. twoway (kdensity lnhr_wage if new==0) ///
+> (kdensity lnhr_wage if new==1) ///
+> (kdensity lnhr_wage if new==0 [aweight=psi1997] ), ///
+> legend(label(1 "Actual 1979") label(2 "Actual 1997") label(3 "Counterfactual 1979") ///
+> rows(2)) ytitle("Kernel Density") ///
+> title("Actual 1979 vs. Actual 1979 vs. Counterfactual 1979")
+{res}{txt}
+{com}. graph export Kernel_Density_1979_C1979.png, replace
+{txt}(file Kernel_Density_1979_C1979.png written in PNG format)
+
+{com}. 
+. *1997 vs. 1979 using 1997 weights
+. twoway (kdensity lnhr_wage if new==1) ///
+> (kdensity lnhr_wage if new==0 [aweight=psi1997] ), ///
+> legend(label(1 "Actual 1997") label(2 "Counterfactual 1979 with 1997 Demographic Weights") ///
+> rows(2)) ytitle("Kernel Density") ///
+> title("Actual 1997 vs. Counterfactual 1979")
+{res}{txt}
+{com}. graph export Kernel_Density_1997_C1979.png, replace
+{txt}(file Kernel_Density_1997_C1979.png written in PNG format)
+
+{com}. 
+. *1979 vs. 1997 using 1979 weights
+. twoway (kdensity lnhr_wage if new==0) ///
+> (kdensity lnhr_wage if new==1 [aweight=psi1979] ), ///
+> legend(label(1 "Actual 1979") label(2 "Counterfactual 1997 with 1979 Demographic Weights") ///
+> rows(2)) ytitle("Kernel Density") ///
+> title("Actual 1979 vs. Counterfactual 1997")
+{res}{txt}
+{com}. graph export Kernel_Density_1979_C1997.png, replace
+{txt}(file Kernel_Density_1979_C1997.png written in PNG format)
+
+{com}. 
+. 
+. 
+. *Subproblem I
+. 
+. *Compare demographic characteristics (i.e. age) between actual and counterfactaul 1997.
+. latabstat age if new==0, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   34.99355 &   12.77136 &         20 &         24 &         32 &         45 &         55 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. latabstat age [aweight=psi1979] if new==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   38.94351 &   9.939499 &         26 &         32 &         39 &         46 &         52 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. 
+. *Subproblem J
+. 
+. *Do the same thing again, restricting attention to blacks.
+. latabstat age if new==0 & black==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   35.52812 &   12.33177 &         21 &         25 &         33 &         45 &         54 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. latabstat age [aweight=psi1979] if new==1 & black==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   38.19553 &   9.680713 &         25 &         31 &         38 &         45 &         51 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. 
+. *Subproblem K
+. 
+. *Experiment with alternative logit specifications.
+. *See if we can improve the results from I and J.
+. 
+. *First, add age cubed.
+. 
+. *Generate a variable for age cubed.
+. generate age3 = age*age*age
+{txt}
+{com}. *Redo the logistic regression and the propensity score with age cubed.
+. logit new female black other age age2 age3 [iweight=wgt_hrs]
+
+{res}{txt}Iteration 0:{space 3}log likelihood = {res:-3.917e+09}  
+Iteration 1:{space 3}log likelihood = {res:-3.834e+09}  
+Iteration 2:{space 3}log likelihood = {res:-3.834e+09}  
+Iteration 3:{space 3}log likelihood = {res:-3.834e+09}  
+{res}
+{txt}Logistic regression{col 51}Number of obs{col 67}= {res}    262810
+{txt}{col 51}LR chi2({res}5{txt}){col 67}= {res}  1.67e+08
+{txt}{col 51}Prob > chi2{col 67}= {res}    0.0000
+{txt}Log likelihood = {res}-3.834e+09{txt}{col 51}Pseudo R2{col 67}= {res}    0.0213
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         new{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}female {c |}{col 14}{res}{space 2} .1448406{col 26}{space 2} .0000549{col 37}{space 1} 2638.31{col 46}{space 3}0.000{col 54}{space 4}  .144733{col 67}{space 3} .1449482
+{txt}{space 7}black {c |}{col 14}{res}{space 2}  .050006{col 26}{space 2} .0000912{col 37}{space 1}  548.49{col 46}{space 3}0.000{col 54}{space 4} .0498273{col 67}{space 3} .0501847
+{txt}{space 7}other {c |}{col 14}{res}{space 2} .6089545{col 26}{space 2} .0001584{col 37}{space 1} 3845.32{col 46}{space 3}0.000{col 54}{space 4} .6086441{col 67}{space 3} .6092648
+{txt}{space 9}age {c |}{col 14}{res}{space 2}-.0435641{col 26}{space 2} .0000675{col 37}{space 1} -645.63{col 46}{space 3}0.000{col 54}{space 4}-.0436964{col 67}{space 3}-.0434319
+{txt}{space 8}age2 {c |}{col 14}{res}{space 2} .0035727{col 26}{space 2} 1.81e-06{col 37}{space 1} 1970.82{col 46}{space 3}0.000{col 54}{space 4} .0035691{col 67}{space 3} .0035762
+{txt}{space 8}age3 {c |}{col 14}{res}{space 2}-.0000457{col 26}{space 2} 1.54e-08{col 37}{space 1}-2969.84{col 46}{space 3}0.000{col 54}{space 4}-.0000458{col 67}{space 3}-.0000457
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.5947809{col 26}{space 2} .0007904{col 37}{space 1} -752.51{col 46}{space 3}0.000{col 54}{space 4}  -.59633{col 67}{space 3}-.5932317
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. predict new_hat2, pr
+{txt}
+{com}. gen psi1997_2 = [(1-new_hat2)/new_hat2]*[mean1997/(1-mean1997)]*wgt_hrs
+{txt}
+{com}. gen psi1979_2 = [new_hat2/(1-new_hat2)]*[(1-mean1997)/mean1997]*wgt_hrs
+{txt}
+{com}. *Full
+. latabstat age if new==0, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   34.99355 &   12.77136 &         20 &         24 &         32 &         45 &         55 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. latabstat age [aweight=psi1979_2] if new==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   39.18865 &   9.905478 &         26 &         32 &         39 &         46 &         52 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. *Black
+. latabstat age if new==0 & black==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   35.52812 &   12.33177 &         21 &         25 &         33 &         45 &         54 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. latabstat age [aweight=psi1979_2] if new==1 & black==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   38.46548 &   9.677537 &         25 &         31 &         38 &         46 &         51 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. 
+. *No improvement...
+. *Second, substract age squared.
+. 
+. *Redo the logistic regression and the propensity score without age squared.
+. logit new female black other age [iweight=wgt_hrs]
+
+{res}{txt}Iteration 0:{space 3}log likelihood = {res:-3.917e+09}  
+Iteration 1:{space 3}log likelihood = {res:-3.884e+09}  
+Iteration 2:{space 3}log likelihood = {res:-3.884e+09}  
+Iteration 3:{space 3}log likelihood = {res:-3.884e+09}  
+{res}
+{txt}Logistic regression{col 51}Number of obs{col 67}= {res}    262810
+{txt}{col 51}LR chi2({res}4{txt}){col 67}= {res}  6.70e+07
+{txt}{col 51}Prob > chi2{col 67}= {res}    0.0000
+{txt}Log likelihood = {res}-3.884e+09{txt}{col 51}Pseudo R2{col 67}= {res}    0.0086
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         new{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}female {c |}{col 14}{res}{space 2} .1359698{col 26}{space 2} .0000544{col 37}{space 1} 2501.03{col 46}{space 3}0.000{col 54}{space 4} .1358633{col 67}{space 3} .1360764
+{txt}{space 7}black {c |}{col 14}{res}{space 2} .0668074{col 26}{space 2} .0000903{col 37}{space 1}  739.47{col 46}{space 3}0.000{col 54}{space 4} .0666303{col 67}{space 3} .0669844
+{txt}{space 7}other {c |}{col 14}{res}{space 2} .6244128{col 26}{space 2} .0001571{col 37}{space 1} 3975.10{col 46}{space 3}0.000{col 54}{space 4} .6241049{col 67}{space 3} .6247207
+{txt}{space 9}age {c |}{col 14}{res}{space 2} .0150296{col 26}{space 2} 2.28e-06{col 37}{space 1} 6579.09{col 46}{space 3}0.000{col 54}{space 4} .0150252{col 67}{space 3} .0150341
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.4233839{col 26}{space 2} .0000908{col 37}{space 1}-4662.44{col 46}{space 3}0.000{col 54}{space 4}-.4235619{col 67}{space 3}-.4232059
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. predict new_hat3, pr
+{txt}
+{com}. gen psi1997_3 = [(1-new_hat3)/new_hat3]*[mean1997/(1-mean1997)]*wgt_hrs
+{txt}
+{com}. gen psi1979_3 = [new_hat3/(1-new_hat3)]*[(1-mean1997)/mean1997]*wgt_hrs
+{txt}
+{com}. *Full
+. latabstat age if new==0, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   34.99355 &   12.77136 &         20 &         24 &         32 &         45 &         55 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. latabstat age [aweight=psi1979_3] if new==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   39.35282 &   11.33751 &         24 &         31 &         39 &         48 &         55 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. *Black
+. latabstat age if new==0 & black==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   35.52812 &   12.33177 &         21 &         25 &         33 &         45 &         54 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. latabstat age [aweight=psi1979_3] if new==1 & black==1, stat(mean sd p10 p25 p50 p75 p90)
+
+{txt}\begin{c -(}table{c )-}[htbp]\centering
+\caption{c -(}\label{c -(}{c )-} 
+\textbf{c -(}{c )-} {c )-}\begin{c -(}tabular{c )-} {c -(}@{c -(}{c )-} l r r r r r r r @{c -(}{c )-}{c )-} \\ \hline
+\textbf{c -(}variable {c )-} & \textbf{c -(}      mean{c )-} & \textbf{c -(}        sd{c )-} & \textbf{c -(}       p10{c )-} & \textbf{c -(}       p25{c )-} & \textbf{c -(}       p50{c )-} & \textbf{c -(}       p75{c )-} & \textbf{c -(}       p90{c )-} \\
+\hline
+       {res}age  &   38.41906 &   11.01582 &         24 &         30 &         38 &         47 &         54 \\
+{txt}\hline
+\multicolumn{c -(}8{c )-}{c -(}@{c -(}{c )-}l{c )-}{c -(}\footnotesize{c -(}\emph{c -(}Source:{c )-} ./morg_cleaned_1980-occ.dta{c )-}{c )-}
+\end{c -(}tabular{c )-}
+\end{c -(}table{c )-}
+
+{com}. 
+. *No improvement...
+. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\samle\Google Drive\Coursework\Kline\Problem Sets\PS3\PS3P1.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}20 Oct 2016, 18:00:43
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

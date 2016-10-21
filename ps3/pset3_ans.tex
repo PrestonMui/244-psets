@@ -22,6 +22,288 @@
 
 \bigskip \textbf{Reweighting}
 
+\bigskip \textit{Subproblem A}
+
+\bigskip First, the authors drop a number of demographic groups from their analysis: those self-employed, those under 18 or over 64, and those with more than 38 years of work experience.\footnote{The authors merely \textit{note} these data-build decisions in their cleaning .do files, they do not \textit{implement} them there.} To compare these groups to prime-working-age employees would be to compare apples and oranges. Second, they top code the wage. This prevents outliers from skewing the analysis. Third, they round school years to whole numbers. This makes the analysis easier in terms of both implementation and interpretation.\footnote{We thank Isabelle Cohen for helpful discussions on this subproblem.}
+
+\bigskip \textit{Subproblem B}
+
+\begin{figure}[H]
+	\caption{Kernel Density for Full Sample}
+	\centering
+	\includegraphics[width=.75\textwidth]{Kernel_Density_Full.pdf}
+\end{figure}
+
+\textit{Subproblem C}
+
+\bigskip The 1997 wage distribution has more mass at the tails than does the 1979 wage distribution. This is in keeping with the authors' result that wage inequality has increased over the past two decades. The 1997 wage distribution also appears to be skewed right. This is in keeping with the authors' result that increasing wage inequality is driven more by the 90/50 gap than by 50/10 gap.
+
+\bigskip In addition, there appears to be bunching at the low-end of the 1979 distribution. This is in keeping with the hypothesis - which the authors comment on but do not argue for - that the minimum wage has been an important determinant of the U.S. wage distribution over the past decades.
+
+\bigskip The key now is to disentangle the degree to which these changes come from (a) the changing demographic composition of the labor force (what you might call ``selection") and (b) more fundamental labor-market changes happening within demographic groups (what you might call ``treatment"). Read on!
+
+\bigskip \textit{Subproblem D}
+
+\begin{figure}[H]
+	\caption{Kernel Density for Selected Subsamples}
+	\begin{subfigure}[H]{.5\textwidth}
+		\caption{Kernel Density for Black Men Aged 25-50}
+		\centering
+		\includegraphics[width=1\textwidth]{Kernel_Density_Black_Men.pdf}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[H]{.5\textwidth}
+		\caption{Kernel Density for White Women Aged 25-50}
+		\centering
+		\includegraphics[width=1\textwidth]{Kernel_Density_White_Women.pdf}
+	\end{subfigure}
+\end{figure}
+
+There were more women and minorities (e.g. black and Latinos) in the labor force in 1997 than in 1979. Could this demographic shift alone explain the changes in the overall wage distribution? Probably not: When we plot the wage distributions specifically for young black men and young black women, we still changes between 1979 and 1997. In other words, even conditioning on these particular demographic characteristics, we still see that there are more fundamental economic forces at work.
+
+\bigskip So: What changes do we see exactly? For black men, the mean wage is actually lower in 1997 than it was in 1979. This could be because of increased racial discrimination, changes in government welfare programs, or changes in the skill level of the average African-American worker (e.g. if a higher portion of African Americans were working in 1997 than in 1979, the average worker might be less skilled). For white women, the mean wage is higher in 1997 than it was in 1979, and overall the distribution is more symmetric. This is unsurprising, since women were more likely to hold high-skill/high-wage positions in the late 1990s than in the late 1970s.
+
+\bigskip Compared to the overall distribution, white woman have a similar average wage, but black men have a lower average wage.
+
+\bigskip \textit{Subproblem E}
+
+\bigskip See the attached Stata code.
+
+\bigskip \textit{Subproblems F \& G}
+
+\begin{figure}[H]
+	\caption{Actual 1997 vs. Counterfactual 1997}
+	\centering
+	\includegraphics[width=.75\textwidth]{Kernel_Density_1997_C1997.png}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{Actual 1979 vs. Counterfactual 1979}
+	\centering
+	\includegraphics[width=.75\textwidth]{Kernel_Density_1979_C1979.png}
+\end{figure}
+
+%\begin{figure}[H]
+%	\caption{What the fuck do these graphs tell us?}
+%	\begin{subfigure}[H]{.5\textwidth}
+%		\caption{Actual 1997 vs. Counterfactual 1979}
+%		\centering
+%		\includegraphics[width=1\textwidth]{Kernel_Density_1997_C1979.png}
+%	\end{subfigure}
+%	\hfill
+%	\begin{subfigure}[H]{.5\textwidth}
+%		\caption{Actual 1979 vs. Counterfactual 1997}
+%		\centering
+%		\includegraphics[width=1\textwidth]{Kernel_Density_1979_C1997.png}
+%	\end{subfigure}
+%\end{figure}
+
+\textit{Subproblem H}
+
+\bigskip Above, when we estimated separate wage distributions for young black men and young white women, we were going some of the way toward disentangling demographic effects from more fundamental economic effects. But we can still go further. One strategy is to \textit{reweight} the 1997 sample so that it has the same demographic shares as the 1997 sample. We would then have a new \textit{counterfactual} 1997 wage distribution. And we we moved from one distribution to another, we would then be able to isolate one of our effects of interest:
+
+$$ \text{Actual 1979} \underbrace{\Rightarrow}_{Fundamentals} \text{Reweighted 1997} \underbrace{\Rightarrow}_{Demographics} \text{Actual 1997} $$
+
+\bigskip How can we produce the weights exactly?\footnote{We thank Christopher Campos for help with this mathematical explication.} Let $w$ be the wage schedule, let $z$ be demographic characteristics, and let $t$ be the year. Let the conditional pdf of $w$ be $f(w|t_w=t,t_z=t)$. Notice that $t$ is indexed by $w$ and by $z$, which indicates that we can, counterfactually, mix wage schedules and demographic characteristics from different years. For example, conditioning $t_w=1979,t_z=1997$ means conditioning on the wage schedule that prevailed in 1979 but the demographic characteristics that prevailed in 1997.
+
+%With this notation, the pdf of wages is as follows.
+%\begin{align*}
+%f_t(w) &= \int_{z} dF(w,z|t_{w,z}=t) \\
+%&= \int_{z} f(w|z,t_{w,z}=t)dF(z|t_z=t) \\
+%&= f(w|t_w=t,t_z=t)
+%\end{align*}
+
+\bigskip Consider the baseline case, where we reweight the 1997 wage distribution so that it has the 1979 demographic characteristics.
+
+\begin{align*}
+f(w|t_w=1997,t_z=1979)&=\int_{z} f(w|z,t_w=1997)dF(z|t_z=1979) \\
+&=\int_{z} f(w|z,t_w=1997)\frac{dF(z|t_z=1997)}{dF(z|t_z=1997)}dF(z|t_z=1979) \\
+&=\int_{z} f(w|z,t_w=1997)\Psi_z(z)dF(z|t_z=1997)
+\end{align*}
+
+where
+
+$$ \Psi_z(z) = \frac{dF(z|t_z=1979)}{dF(z|t_z=1997)} $$
+
+By Bayes' Rule
+
+\begin{align*}
+\Psi_z(z) &=\frac{dF(z|t_z=1979)}{dF(z|t_z=1997)} \\
+&=\frac{P(t_z=1979|z)F(z)}{P(t_z=1979)}\frac{P(t_z=1997)}{P(t_z=1997|z)F(z)} \\
+&= \frac{P(t_z=1979|z)}{P(t_z=1997|z)}\frac{P(t_z=1997)}{P(t_z=1979)}
+\end{align*}
+
+where the conditional probabilities are are the sample frequencies and the unconditional probabilities are propensity scores.
+
+\bigskip In this case, $\Psi_z(z)dF(z|t_z=1997)$ yields the new weights. Boom! (See the attached Stata code for the actual logistic regression specification used to produce the propensity scores.)
+
+\bigskip Figure 3 plots the three distributions on top of each other. We can apply this logic to our problem at hand: Observe Figure 3 above. Start with the actual 1979 distribution (blue line) and move to the reweighted 1997 distribution (green line). There is a big change. Now move to the actual 1997 distribution (red line). There is a small change. This suggests that the evolution of the wage distribution is not merely due to demographic characteristics, but rather results from other economic forces affecting the wage schedule.
+
+\bigskip The same logic applies going backward in time instead of forward in time. Observe Figure 4, which instead plots the counterfactual 1979 distribution using 1997 weights. There is a big difference between the actual 1997 distribution (red line) and the reweighted 1979 distribution (green line), but not between the reweighted 1979 distribution and the actual 1979 distribution (blue line). This serves as a robustness check, and provides further evidence that more fundamental economic forces are at play.
+
+\bigskip \textit{Subproblem I}
+
+\begin{table}[H]\centering
+	\caption{Actual 1979}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   34.99355 &   12.77136 &         20 &         24 &         32 &        
+		45 &         55 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Counterfactual 1997 Reweighted with 1979 Demographic Characteristics}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   38.94351 &   9.939499 &         26 &         32 &         39 &        
+		46 &         52 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\bigskip \textit{Subproblem J}
+
+\begin{table}[H]\centering
+	\caption{Actual 1979 (African Americans)}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   35.52812 &   12.33177 &         21 &         25 &         33 &        
+		45 &         54 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Counterfactual 1997 Reweighted with 1979 Demographic Characteristics (African Americans)}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   38.19553 &   9.680713 &         25 &         31 &         38 &        
+		45 &         51 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\bigskip \textit{Subproblem K \& L}
+
+\bigskip Observe from Tables 1-4 that, at least for age, the 1979 and the reweighted 1997 distributions do not have the same moments/quantiles. This is problematic, since the weights are supposed to have been calculated in order to achieve similar demographic characteristics between the two distributions. This suggests that our propensity scores might be misspecified. Below we try a few different specifications, namely (a) adding a cubic term in age, and (b) eliminating the quadratic term in age. Neither makes a difference.
+
+\begin{table}[H]\centering
+	\caption{Actual 1979: Logit with Age, Age$^2$, Age$^3$}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   34.99355 &   12.77136 &         20 &         24 &         32 &        
+		45 &         55 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Counterfactual 1997: Logit with Age, Age$^2$, Age$^3$}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   39.18865 &   9.905478 &         26 &         32 &         39 &        
+		46 &         52 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Actual 1979: Logit with Age, Age$^2$, Age$^3$ (African Americans)}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   35.52812 &   12.33177 &         21 &         25 &         33 &        
+		45 &         54 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Counterfactual 1997: Logit with Age, Age$^2$, Age$^3$ (African Americans)}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   38.46548 &   9.677537 &         25 &         31 &         38 &        
+		46 &         51 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Actual 1979: Logit with Age Only}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   34.99355 &   12.77136 &         20 &         24 &         32 &        
+		45 &         55 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Counterfactual 1997: Logit with Age Only}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} & \textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   39.35282 &   11.33751 &         24 &         31 &         39 &         48 &         55 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[H]\centering
+	\caption{Actual 1979: Logit with Age Only (African Americans)}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   35.52812 &   12.33177 &         21 &         25 &         33 &        
+		45 &         54 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering
+	\caption{Counterfactual 1997: Logit with Age Only (African Americans)}{\label{} 
+		\textbf{} }\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+		\textbf{variable } & \textbf{      mean} & \textbf{        sd} & \textbf{       p10} &
+		\textbf{       p25} & \textbf{       p50} & \textbf{       p75} & \textbf{       p90} \\
+		\hline
+		age  &   38.41906 &   11.01582 &         24 &         30 &         38 &        
+		47 &         54 \\
+		\hline
+		%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} ./morg_cleaned_1980-occ.dta}}
+	\end{tabular}
+\end{table}
+
 \bigskip \textbf{Matching}
 
 \begin{enumerate}[(a)]
