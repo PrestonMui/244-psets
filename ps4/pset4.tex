@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage{minibox}
+\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\usepackage[parfill]{parskip}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[shortlabels]{enumitem}
+\usepackage{amssymb}
+\usepackage{ bbold }
+\usepackage{graphicx} %included to insert a graph
+\usepackage{caption} %included to include a caption over the graph
+\usepackage{booktabs} %needed for the table's toprule midrule and bottomrule sequences
+\usepackage[section]{placeins} %to keep graphs and tables in the very section to which they belong 
+\usepackage{pdflscape} %to include the landscape environment 
+\usepackage[T1]{fontenc}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{lscape}
+%-----------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+\framebox[\linewidth]{ 
+	\minibox[c]{
+	\Large Econ 244 - Homework \#4 \\ \\
+	}
+}
+\end{center}
+
+\begin{enumerate}[(a)]
+	\item See do file.
+	\item See do file and table \ref{q2b}. \\
+	\input{input/ps4_q2b.tex}
+	\item  It appears arrests go down in the years following the policy relative just before the curfew was put in place. In the years prior to the policy, arrest rates were fairly flat. However, the estimates are fairly imprecise outside of a couple year band around the policy. Note that data from 10 years before the policy and 10 years after were binned into the -10 and 10 dummies.\\
+	\includegraphics[scale=.8]{input/coef_plot_10year.pdf}
+	\item We can restrict our analysis to just look 5 years before and after the policy or 12 years before and after. We can see a slight change in the coefficients but the general pattern is similar--that arrest rates were fairly flat beforehand and decreased in the years after the policy.\\
+		\includegraphics[scale=.8]{input/coef_plot_5year.pdf} \\
+		\includegraphics[scale=.8]{input/coef_plot_12year.pdf}
+	
+	\item When we add a linear city-specific trend, we get a slightly different story from the data. It appears that arrests were slightly increasing prior to the policy change and then decreased afterwards. Perhaps explaining the impetus for the policy change. \\
+		\includegraphics[scale=.8]{input/coef_plot_10year_trend.pdf}
+	
+\end{enumerate}
+
+
+\end{document}
