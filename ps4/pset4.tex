@@ -55,6 +55,25 @@
 		\centering
 		\input{input/ps4_q4b.tex}
 		\end{table}
+		\item To ease notation, let $H \equiv \{85,87,88,89,90\}$ be the set of event dates.
+
+		First, observe that we can write $\pi_{k,t}$ as including the dynamic causal effects as well as the endogenous component. That is, we can write:
+		\[\pi_{k,t} = \delta_{t-k}\mathbf{1}(t \geq k) + \eta_k \]
+
+		As is stated in the original problem, this directly implies the first set of linear restrictions:
+		\[\pi_{k,t} = \pi_{k,t'} \mbox{ } \forall (t,t') < k\]
+
+		Next, observe that for all $h$ such that $k, k' \in H$ and for all $t$ and $s$, we have
+		\begin{align*}
+			\pi_{k',k'+t} - \pi_{k,k+t} & = \eta_{k'} - \eta_{k} \\
+			& = \pi_{k',k'+s} - \pi_{k,k+s}
+		\end{align*}
+
+		Similarly, we also have for $k,k'\in H$ and time periods $t$ and $s$:
+		\begin{align*}
+			\pi_{k,k+t+s} - \pi_{k,k+t} & = \delta_{t+s} - \delta_{t} \\
+            & = \pi_{k',k'+t+s} - \pi_{k',k'+t}
+		\end{align*}
 	\end{enumerate}
 \end{enumerate}
 
