@@ -32,6 +32,56 @@
 
 \begin{enumerate}[1)]
 	\item (CRE vs Fixed Effects)
+
+	\begin{enumerate}[(a)]
+	
+		\item Prove that the LSDV estimator of this model is consistent for $\beta$:
+
+		The LSDV estimator is given estimating
+		\begin{align*}
+		 	Y_{it} &= \sum_{j=1}^N \gamma_j D^j_{it} + \beta X_{it} + \epsilon_{it}
+		\end{align*}
+
+		By the Frisch-Waugh-Lovell theorem, the estimated coefficient $\beta$ is equivalent to regressing $\tilde{Y}_{it}$ on $\tilde{X}_{it}$, $\tilde{Y}_{it}$ and $\tilde{X}_{it}$ are the regressions of $Y$ and $X$ on the dummy variables. This is equivalent to demeaning the variables by individual $i$, so $\tilde{Y}_{it} = Y_{it} - \bar{Y}_i$ and $\tilde{X}_{it} = X_{it} - \bar{X}_i$. This is consistent for $\beta$ if $E[\tilde{\epsilon}_{it} \tilde{X}_{it}] = 0$:
+		\begin{align*}
+			E[\tilde{\epsilon}_{it} \tilde{X}_{it}] &= E[(\epsilon_{it} - \bar{\epsilon}_i) (X_{it} - \bar{X}_i)] \\
+			&= E[(\epsilon_{it} - \bar{\epsilon}_i) (X_{it} - \bar{X}_i)]
+		\end{align*}
+		which holds if there is strict exogeneity of $\epsilon_{it}$, because $\bar{\epsilon}_i$ is a function of future and lag values of $\epsilon_{it}$ as well; that is, if $X_{it}$ is uncorrelated with not only $\epsilon_{it}$ but also future and lag values of $\epsilon_{it}$.
+
+		\item Show that estimating $Y_{it} = \alpha_0 + \alpha_1 \bar{X}_i + \beta X_{it} + u_{it}$ yields the same estimate as the LSDV estimator:
+
+		By using the F-W-L theorem, estimating the above is equivalent to estimating
+		\begin{align*}
+			Y_{it} - \bar{Y} &= \alpha_1 (\bar{X}_i - \bar{X}) + \beta (X_{it} - \bar{X}) + (u_{it} - \bar{u}) 
+		\end{align*}
+		That is, regressing the population-demeaned variables on each other without a constant. Applying F-W-L again, note that the annihilator matrix for $\bar{X}_i - \bar{X}$ is
+		\begin{align*}
+			M &= I - \frac{1}{T \sum_{j} (\bar{X}_j - \bar{X})^2} \begin{bmatrix} [(\bar{X}_{i} - \bar{X})(\bar{X}_{j} - \bar{X})] \end{bmatrix}
+		\end{align*}
+		that is, every element of the last term is $(X_{i} - \bar{X})(X_j - \bar{X})$. Applying the annihilator matrix to the LHS, the $i$th element of the LHS vector is
+		\begin{align*}
+			(M Y)_i &= Y_{it} - \bar{Y} - \frac{(\bar{X}_i - \bar{X}) \sum_{j,t} \left( \bar{X}_j - \bar{X} \right) \left( Y_{jt} - \bar{Y} \right)  }{T \sum_{j} (\bar{X}_j - \bar{X})^2} \\
+			&= Y_{it} - \bar{Y} - \frac{(\bar{X}_i - \bar{X}) \sum_{j} \left( \bar{X}_j - \bar{X} \right) \sum_t \left( Y_{jt} - \bar{Y} \right)  }{T \sum_{j} (\bar{X}_j - \bar{X})^2} \\
+			&= Y_{it} - \bar{Y} - \frac{(\bar{X}_i - \bar{X}) \sum_{j} \left( \bar{X}_j - \bar{X} \right) \left( \bar{Y}_j - \bar{Y} \right)  }{\sum_{j} (\bar{X}_j - \bar{X})^2} \\
+			&= Y_{it} - \bar{Y} - \frac{(\bar{X}_i - \bar{X}) \sum_{j} \left( \bar{X}_j - \bar{X} \right) \left( [a_0 + a_1 \bar{X}_j + \beta \bar{X}_j + \bar{u}_j] - [a_0 + a_1 \bar{X} + \beta \bar{X} + \bar{u}] \right)  }{\sum_{j} (\bar{X}_j - \bar{X})^2} \\
+			&= Y_{it} - \bar{Y} - \frac{(\bar{X}_i - \bar{X}) \sum_{j} \left( \bar{X}_j - \bar{X} \right) \left( (a_1 + \beta) (\bar{X}_j - \bar{X}) + \bar{u}_j - \bar{u} \right)  }{\sum_{j} (\bar{X}_j - \bar{X})^2} \\
+			&= Y_{it} - \bar{Y} - (a_1 + \beta) (\bar{X}_i - \bar{X}) - \frac{(\bar{X}_i - \bar{X}) \sum_{j} \left( \bar{X}_j - \bar{X} \right) \left( \bar{u}_j - \bar{u} \right)  }{\sum_{j} (\bar{X}_j - \bar{X})^2} \\
+			&= Y_{it} - \bar{Y}_i
+		\end{align*}
+		and similar algebra applied to regressing $X_{it} - \bar{X}$ on $\bar{X}_i- \bar{X}$ shows that the full regression is equivalent to regressing $Y_{it} - \bar{Y}_i$ on $X_{it} -\bar{X}_i$, which is the same as LSDV.
+
+		\item Describe a procedure for testing for zero correlation between the person effects and $X_{it}$: one could regress $T_{it}$ on $\bar{X}_{it}$ and $X_{it}$, as before, and t-test the hypothesis that the coefficient on $\bar{X}_{it}$ is 0. If one rejects the hypothesis, then that is evidence for correlation between the person effects and $X_{it}$.
+
+		\item Propose estimators for $Var(v_i)$ and $Var(\alpha_i)$:
+
+		For $Var(v_i)$, an estimator is the saple variance, given by $\frac{1}{N-1} \sum_i (\hat{\alpha}_i - \hat{a}_0 - \hat{a}_1 \bar{X}_i)^2$, where $\hat{\alpha}$ is taken from the fixed-effects regression and $\alpha_0$ and $\alpha_1$ is taken from the regression from part (b). 
+
+		For $Var(\alpha_i)$, since $\alpha_i = a_0 + a_1 \bar{X}_i + v_i$, the estimator for $\alpha_i$ is $Var(\bar{X}_i) + \hat{Var}(v_i)$.
+	
+	\end{enumerate}
+	
+
 	\item (Event Study)
 	\begin{enumerate}[(a)]
 		\item See do file.
