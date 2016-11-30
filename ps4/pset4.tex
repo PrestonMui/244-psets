@@ -100,11 +100,7 @@
 	\item (CRE Event Study)
 	\begin{enumerate}[(a)]
 		\item See do file.
-		\item Estimating the model with ``mvreg''.
-		\begin{table}
-		\centering
-		\input{input/ps4_q4b.tex}
-		\end{table}
+		\item Estimating the model with ``mvreg''. See Table~\ref{Unconstrained}
 		\item To ease notation, let $H \equiv \{85,87,88,89,90\}$ be the set of event dates.
 
 		First, observe that we can write $\pi_{k,t}$ as including the dynamic causal effects as well as the endogenous component. That is, we can write:
@@ -119,12 +115,46 @@
 			& = \pi_{k',k'+s} - \pi_{k,k+s}
 		\end{align*}
 
-		Similarly, we also have for $k,k'\in H$ and time periods $t$ and $s$:
+		Similarly, we also have for $k,k'\in H$ and $t$ and $s$:
 		\begin{align*}
 			\pi_{k,k+t+s} - \pi_{k,k+t} & = \delta_{t+s} - \delta_{t} \\
             & = \pi_{k',k'+t+s} - \pi_{k',k'+t}
 		\end{align*}
+
+		The final set of constraints identify each $\delta_k$ separately. For all $k,k' \in H$, for all $t,t'$ and all $s$:
+		\begin{align*}
+			\pi_{k,k+s} - \pi_{k,k-t} & = \delta_{s} \\
+			& = \pi_{k',k'+s} - \pi_{k',k'-t'}
+		\end{align*}
+
+		\item Using the \textit{constraint} function in Stata along with \textit{sureg}, we can estimate the model under the constraints specified in part (c), of which only 26 were needed to span the entire set.\footnote{Note: I did this in a rather brute force manner. Rather than figuring out analytically the minimal set of constraints necessary to span the entire space of constraints, I looped over each of these constraint sets and allowed Stata to remove those that were redundant.} These estimates are given in the Table~\ref{Constraint_Est}
+
+		Using \textit{lincom} we can identify each $\delta_k$ as the difference $\pi_{85,85+k}-\pi_{85,84}$ which removes the endogenous component appearing in both terms, leaving only the $k^{th}$ dynamic term. See Table~\ref{Lincoms}
+		
 	\end{enumerate}
 \end{enumerate}
+
+\appendix
+
+\begin{table}
+	\caption{Estimating the Model with \textit{mvreg}}
+	\label{Unconstrained}
+	\centering
+	\input{input/ps4_q4b.tex}
+\end{table}
+
+\begin{table}
+	\caption{Estimating the Model Under 26 Constraints}
+	\label{Constraint_Est}
+	\centering
+	\input{input/ps4_q4d.tex}
+\end{table}
+
+\begin{table}
+	\caption{Identifying $\delta_k$ from differences in constrained estimates}
+	\label{Lincoms}
+	\centering
+	\input{input/ps4_q4d_lincoms.tex}
+\end{table}
 
 \end{document}

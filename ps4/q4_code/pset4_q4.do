@@ -266,20 +266,46 @@ sureg (lnarrests84 enacted_*) (lnarrests85 enacted_*) ///
       (lnarrests88 enacted_*) (lnarrests89 enacted_*) ///
       (lnarrests90 enacted_*), ///
       constraints($constraints) 
+estimates store constrained_est
+
+esttab constrained_est
+
+// This file exports the table produced in part (b) of pset4_q4.do
+esttab constrained_est using input/ps4_q4d.tex, ///
+    unstack se replace nonum ///
+    cells(b(star fmt(2)) se(par fmt(2))) ///
+    eqlabels("1984" "1985" "1986" "1987" "1988" "1989" "1990") ///
+    mlabels("Log of Arrests Made in", span  ///
+                                      prefix(\multicolumn{@span}{c}{) ///
+                                      suffix(})) ///
+    starlevels(* 0.10 ** 0.05 *** 0.01) ///
+    varlabels( _cons "Year Intercept" ///
+        enacted_84 "Enacted in 1984" /// 
+        enacted_85 "Enacted in 1985" /// 
+        enacted_86 "Enacted in 1986" /// 
+        enacted_87 "Enacted in 1987" /// 
+        enacted_88 "Enacted in 1988" /// 
+        enacted_89 "Enacted in 1989" /// 
+        enacted_90 "Enacted in 1990")
 
 //Recover Estimates of Delta
-lincom [lnarrests85]enacted_85-[lnarrests84]enacted_85
-	est store delta_0
-lincom [lnarrests86]enacted_85-[lnarrests84]enacted_85
-		est store delta_1
-lincom [lnarrests87]enacted_85-[lnarrests84]enacted_85
-		est store delta_2
-lincom [lnarrests88]enacted_85-[lnarrests84]enacted_85
-		est store delta_3
-lincom [lnarrests89]enacted_85-[lnarrests84]enacted_85
-		est store delta_4
-lincom [lnarrests90]enacted_85-[lnarrests84]enacted_85
-		est store delta_5
+matrix deltas = J(6,2,.)
+forvalues i = 0(1)5{
+	local t = 85 + `i'
+	lincom [lnarrests`t']enacted_85-[lnarrests84]enacted_85
+	
+	matrix deltas[`i'+1,1] = r(estimate)
+	matrix deltas[`i'+1,2] = r(se)
+}
+// Export the table
+esttab matrix(deltas,fmt(3)) using input/ps4_q4d_lincoms.tex, ///
+	mlabel(,none) collabels("Estimate" "S.E.") tex replace ///
+	substitute(r1 "\$ \delta_0 = \pi_{85,85} - \pi_{85,84} \$" ///
+	           r2 "\$ \delta_1 = \pi_{85,86} - \pi_{85,84} \$" ///
+	           r3 "\$ \delta_2 = \pi_{85,87} - \pi_{85,84} \$" ///
+	           r4 "\$ \delta_3 = \pi_{85,88} - \pi_{85,84} \$" ///
+	           r5 "\$ \delta_4 = \pi_{85,89} - \pi_{85,84} \$" ///
+	           r6 "\$ \delta_5 = \pi_{85,90} - \pi_{85,84} \$")
 
 
 
