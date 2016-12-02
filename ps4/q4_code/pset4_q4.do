@@ -4,6 +4,7 @@
 * Students: Christina Brown, Sam Leone, Peter McCrory, Preston Mui
 *******************************************************************************
 qui{
+set more off
 // Specify Working Directory and import the data
 global pers_dir = "/Users/PBM/Dropbox/Berkeley/Fall_2016/Applied_Econometrics/"
 global main = "$pers_dir/244-psets/ps4/"
@@ -107,7 +108,6 @@ qui test ///
 		}
 	}
 }
-}
 
 // Fourth Set of Linear Restrictions
 foreach k in $H{
@@ -139,10 +139,12 @@ qui test ///
 	}
 noisily test, accum
 }
+}
 
 *------------------------------------------------------------------------------
 * Part (d): Constraint and Sureg
 *------------------------------------------------------------------------------
+qui{
 qui do q4_code/takefromglobal
 
 local i = 1
@@ -306,8 +308,7 @@ esttab matrix(deltas,fmt(3)) using input/ps4_q4d_lincoms.tex, ///
 	           r4 "\$ \delta_3 = \pi_{85,88} - \pi_{85,84} \$" ///
 	           r5 "\$ \delta_4 = \pi_{85,89} - \pi_{85,84} \$" ///
 	           r6 "\$ \delta_5 = \pi_{85,90} - \pi_{85,84} \$")
-
-
+}
 
 
 
