@@ -127,30 +127,38 @@
 			& = \pi_{k',k'+s} - \pi_{k',k'-t'}
 		\end{align*}
 
+		When we test all these linear restrictions (which collapse to only 26 restrictions from which the remaining restrictions can be derived), we fail to reject the null hypothesis that all the linear restrictions hold. \textbf{The p-value of this test is 0.5866}.
+
+
+
 		\item Using the \textit{constraint} function in Stata along with \textit{sureg}, we can estimate the model under the constraints specified in part (c), of which only 26 were needed to span the entire set.\footnote{Note: I did this in a rather brute force manner. Rather than figuring out analytically the minimal set of constraints necessary to span the entire space of constraints, I looped over each of these constraint sets and allowed Stata to remove those that were redundant.} These estimates are given in the Table~\ref{Constraint_Est}
 
 		Using \textit{lincom} we can identify each $\delta_k$ as the difference $\pi_{85,85+k}-\pi_{85,84}$ which removes the endogenous component appearing in both terms, leaving only the $k^{th}$ dynamic term. See Table~\ref{Lincoms}
 		
+		Relative to problem (2), we find that the estimates of the initial effect are approximately 3 times as large. Over the subsequent five years, the results for this problem suggest a stable drop of .13. This is approximately a third higher than the estimates that we calculated in problem two for years 1 thru 4. In year five, we estimate that the effect is even larger at .18. However, it should be noted that we cannot reject equality of these estimates since we have such large standard errors.
+
+		Note that \textit{mvreg} estimates a model of Zellner's Seemingly Unrelated Regression. Thus, although we are allowing for correlation in error terms across equations, our inference requires that for all cities $i$ and $j$, $Cov(\epsilon_{i,t},\epsilon_{i,s}) = Cov(\epsilon_{j,t},\epsilon_{j,s})$. That is, each city is drawn from the same distribution and there is no correlation of the error terms between cities.
 	\end{enumerate}
 \end{enumerate}
 
+\clearpage
 \appendix
 
-\begin{table}
+\begin{table}[h]
 	\caption{Estimating the Model with \textit{mvreg}}
 	\label{Unconstrained}
 	\centering
 	\input{input/ps4_q4b.tex}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
 	\caption{Estimating the Model Under 26 Constraints}
 	\label{Constraint_Est}
 	\centering
 	\input{input/ps4_q4d.tex}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
 	\caption{Identifying $\delta_k$ from differences in constrained estimates}
 	\label{Lincoms}
 	\centering
